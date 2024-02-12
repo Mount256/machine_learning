@@ -1,6 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 均值归一化
+def mean_normalize_features(X):
+    mu = np.mean(X, axis=0) # 计算平均值，矩阵可指定计算行(axis=1)或列(axis=0，此处即特征值)
+    X_mean = (X - mu) / (np.max(X, axis=0) - np.min(X, axis=0))
+    return X_mean
+
+# z-score 归一化
+def zscore_normalize_features(X):
+    mu = np.mean(X, axis=0) # 计算平均值，矩阵可指定计算行(axis=1)或列(axis=0，此处即特征值)
+    sigma = np.std(X, axis=0) # 计算标准差，矩阵可指定计算行(axis=1)或列(axis=0，此处即特征值)
+    X_zscore = (X - sigma) / mu
+    return X_zscore
+
 # 计算误差均方函数 J(w,b)
 def cost_function(X, y, w, b):
     m = X.shape[0] # 训练集的数据样本数
@@ -54,16 +67,20 @@ def print_contrast(train, prediction, n):
 if __name__ == '__main__':
     # 训练集样本
     data = np.loadtxt("./data.txt", delimiter=',', skiprows=1)
-    X_train = data[:, :4] # 训练集的第 0-3 列为 X = (x0, x1, x2, x3)
-    y_train = data[:, 4] # 训练集的第 4 列为 y
-    w = np.zeros((X_train.shape[1],)) # 权重
-    b = 0.0 # 偏置
+    X_train = data[:, :4]  # 训练集的第 0-3 列为 X = (x0, x1, x2, x3)
+    y_train = data[:, 4]  # 训练集的第 4 列为 y
+    w = np.zeros((X_train.shape[1],))  # 权重
+    b = 0.0  # 偏置
     epochs = 1000  # 迭代次数
-    learning_rate = 1e-7  # 学习率
+    learning_rate = 0.01  # 学习率
     J_history = []  # 记录每次迭代产生的误差值
 
+    # Z-score 归一化
+    X_norm = zscore_normalize_features(X_train)
+    print(f"X_norm = {np.round(X_norm, 4)}")
+
     # 线性回归模型的建立
-    w, b, J_history = linear_regression(X_train, y_train, w, b, learning_rate, epochs)
+    w, b, J_history = linear_regression(X_norm, y_train, w, b, learning_rate, epochs)
     print(f"result: w = {np.round(w, 4)}, b = {b:0.4f}")  # 打印结果
 
     # 训练集 y_train 与预测值 y_hat 的对比
