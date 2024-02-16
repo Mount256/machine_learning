@@ -78,7 +78,7 @@ if __name__ == '__main__':
     w = np.zeros((X_train.shape[1],)) # 权重
     b = 0.0 # 偏置
     learning_rate = 0.01 # 学习率
-    epochs = 1000 # 迭代次数
+    epochs = 10000 # 迭代次数
     J_history = [] # 记录每次迭代产生的误差值
 
     # 逻辑回归建立模型
@@ -86,11 +86,12 @@ if __name__ == '__main__':
     print(f"result: w = {np.round(w, 4)}, b = {b:0.4f}")  # 打印结果
 
     # 绘制迭代计算得到的决策边界（decision boundary）方程
-    # w[0] * x_feature[0] + w[1] * x_feature[1] + b = 0
+    # w[0] * x_feature0 + w[1] * x_feature1 + b = 0
+    # --> x_feature1 = -w[0]/w[1] * x_feature0 - b/w[1]
     plt.figure(1)
-    draw_line(-w[1]/w[0], -b/w[0], 0.0, 3.0, "Decision Boundary")
-    plt.scatter(X_train[0:4, 0], X_train[0:4, 1], label="sad", marker='s')  # 将训练集也表示在图中
-    plt.scatter(X_train[4:8, 0], X_train[4:8, 1], label="happy", marker='^')  # 将训练集也表示在图中
+    draw_line(-w[0]/w[1], -b/w[1], 0.0, 3.0, "Decision Boundary")
+    plt.scatter(X_train[0:4, 0], X_train[0:4, 1], label="label-0: sad", marker='s')  # 将训练集也表示在图中
+    plt.scatter(X_train[4:8, 0], X_train[4:8, 1], label="label-1: happy", marker='^')  # 将训练集也表示在图中
     plt.legend()
     plt.show()
 
