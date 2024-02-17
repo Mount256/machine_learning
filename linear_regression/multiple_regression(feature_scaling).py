@@ -77,16 +77,19 @@ if __name__ == '__main__':
 
     # Z-score 归一化
     X_norm = zscore_normalize_features(X_train)
+    #y_norm = zscore_normalize_features(y_train)
     print(f"X_norm = {np.round(X_norm, 4)}")
+    #print(f"y_norm = {np.round(y_norm, 4)}")
 
     # 线性回归模型的建立
     w, b, J_history = linear_regression(X_norm, y_train, w, b, learning_rate, epochs)
     print(f"result: w = {np.round(w, 4)}, b = {b:0.4f}")  # 打印结果
 
-    # 训练集 y_train 与预测值 y_hat 的对比
+    # 训练集 y_train 与预测值 y_hat 的对比（这里其实我偷了个懒，训练集当测试集用，以后不要这样做！）
     y_hat = np.zeros(X_train.shape[0])
     for i in range(X_train.shape[0]):
-        y_hat[i] = np.dot(w, X_train[i]) + b
+        # 注意，测试集的输入也需要进行归一化！
+        y_hat[i] = np.dot(w, X_norm[i]) + b
     print_contrast(y_train, y_hat, y_train.shape[0])
 
     # 绘制误差值的散点图

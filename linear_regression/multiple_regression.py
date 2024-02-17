@@ -66,7 +66,7 @@ if __name__ == '__main__':
     w, b, J_history = linear_regression(X_train, y_train, w, b, learning_rate, epochs)
     print(f"result: w = {np.round(w, 4)}, b = {b:0.4f}")  # 打印结果
 
-    # 训练集 y_train 与预测值 y_hat 的对比
+    # 训练集 y_train 与预测值 y_hat 的对比（这里其实我偷了个懒，训练集当测试集用，以后不要这样做！）
     y_hat = np.zeros(X_train.shape[0])
     for i in range(X_train.shape[0]):
         y_hat[i] = np.dot(w, X_train[i]) + b

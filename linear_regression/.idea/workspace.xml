@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="272897ef-66c8-4cc5-88ae-a5c682ffd1a6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiple_regression(feature_scaling).py" beforeDir="false" afterPath="$PROJECT_DIR$/multiple_regression(feature_scaling).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/multiple_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/multiple_regression.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
       <recent name="E:\machine_learning\linear_regression" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.multiple_regression">
+  <component name="RunManager" selected="Python.multiple_regression(feature_scaling)">
     <configuration name="feature_scaling" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="linear_regression" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -144,8 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.multiple_regression" />
         <item itemvalue="Python.multiple_regression(feature_scaling)" />
+        <item itemvalue="Python.multiple_regression" />
         <item itemvalue="Python.feature_scaling" />
         <item itemvalue="Python.numpy_array" />
         <item itemvalue="Python.linear_regression" />
@@ -170,25 +172,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="548" y="153" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1707966177103" />
-    <state width="1515" height="163" key="GridCell.Tab.0.bottom" timestamp="1707734807061">
+    <state width="1515" height="134" key="GridCell.Tab.0.bottom" timestamp="1708143059707">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="163" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1707734807061" />
-    <state width="1515" height="163" key="GridCell.Tab.0.center" timestamp="1707734807061">
+    <state width="1515" height="134" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1708143059707" />
+    <state width="1515" height="134" key="GridCell.Tab.0.center" timestamp="1708143059707">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="163" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1707734807061" />
-    <state width="1515" height="163" key="GridCell.Tab.0.left" timestamp="1707734807061">
+    <state width="1515" height="134" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1708143059707" />
+    <state width="1515" height="134" key="GridCell.Tab.0.left" timestamp="1708143059707">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="163" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1707734807061" />
-    <state width="1515" height="163" key="GridCell.Tab.0.right" timestamp="1707734807061">
+    <state width="1515" height="134" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1708143059707" />
+    <state width="1515" height="134" key="GridCell.Tab.0.right" timestamp="1708143059707">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="163" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1707734807061" />
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1707966152611">
+    <state width="1515" height="134" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1708143059707" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1708141287249">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1707966152611" />
+    <state x="449" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1708141287249" />
   </component>
 </project>
