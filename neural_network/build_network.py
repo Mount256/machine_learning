@@ -65,8 +65,8 @@ def dense(A, W, B, g):
 	A_out = g(Z)
 	return A_out
 
-# 神经网络的搭建（前向传播）
-def forward(network, X):
+# 神经网络的搭建
+def predict(network, X):
     W1, W2, W3, W4 = network['W1'], network['W2'], network['W3'], network['W4']
     B1, B2, B3, B4 = network['B1'], network['B2'], network['B3'], network['B4']
 
@@ -81,5 +81,5 @@ def forward(network, X):
 if __name__ == '__main__':
     network = init_network() # 配置神经网络的参数
     X = np.array([[1.0, 0.5]]) # 输入层（layer 0）
-    Y = forward(network, X) # 输出层（layer 4）
+    Y = predict(network, X) # 输出层（layer 4）
     print(Y)
