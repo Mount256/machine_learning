@@ -72,12 +72,12 @@ def assessment():
 
 if __name__ == '__main__':
     network = init_network('sample_weight.pkl') # 配置神经网络的参数
-    _, _, X, T = get_data() # X：测试集数据，T：测试集正确结果
+    _, _, X, T = get_data() # X：测试集数据，T：测试集正确结果（监督数据）
     accuracy_cnt = 0 # 记录推理正确的个数
 
     for i in range(X.shape[0]): # X.shape[0] 即为测试集数据个数
         Y = predict(network, X[i])  # 对测试集每个数据进行推理，得到 10 个概率数值的一维数组
-        # print(Y)
+        # print(Y) # 输出每个数据的推理结果
         # axis=0：返回每一列最大值的索引；axis=1：返回每一行最大值的索引
         # axis=None：降为一维数组后，返回最大值的索引
         p = np.argmax(Y, axis=None) # 返回概率最大的索引

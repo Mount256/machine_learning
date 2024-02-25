@@ -7,12 +7,12 @@
 
 ## 文件夹说明
 
-'test'：numpy库和matplotlib库的简单使用
+`test`：numpy库和matplotlib库的简单使用
 
-'dataset'：手写数字数据集mnist（包含训练集和测试集）
+`dataset`：手写数字数据集mnist（包含训练集和测试集）
 
-'linear_regression'：线性回归、多元线性回归
+`linear_regression`：线性回归、多元线性回归
 
-'logistic_regression'：逻辑回归（二元分类）
+`logistic_regression`：逻辑回归（二元分类）
 
-'neural_network'：神经网络
+`neural_network`：神经网络
