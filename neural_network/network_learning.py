@@ -51,24 +51,27 @@ def log_loss_function(y, t):
     return -np.sum(t * np.log(y + delta))
 
 # 数值微分（中心差分方法）
-# loss_f 为以上损失函数二选一
-def _numerical_gradient(loss_f, x):
-    h = 1e-4
+# f 为以上损失函数二选一
+def _numerical_gradient(f, x):
+    h = 1e-4 # 0.0001
     grad = np.zeros_like(x)
+
     for i in range(x.size):
         tmp = x[i]
 
         # 计算 f(x+h)
-        x[i] = tmp + h
-        fxh1 = loss_f(x)
+        x[i] = float(tmp) + h
+        fxh1 = f(x)
 
         # 计算 f(x-h)
-        x[i] = tmp - h
-        fxh2 = loss_f(x)
+        x[i] = float(tmp) - h
+        fxh2 = f(x)
 
         # 计算中心差分
-        grad = (fxh1 - fxh2) / (2 * h)
+        grad[i] = (fxh1 - fxh2) / (2 * h)
         x[i] = tmp
+        #print(grad)
+
     return grad
 
 # 数值微分（中心差分方法），由于输入形状不同，所以需要分别执行不同操作
@@ -86,11 +89,11 @@ def numerical_gradient(loss_f, X):
 class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层）的类
 
     # 初始化配置各个神经元的参数
-    def __init__(self, input_size, hidden_size, output_size):
+    def __init__(self, input_size, hidden_size, output_size, weight_init_std=0.01):
         self.params = {} # 字典类型
-        self.params['W1'] = np.random.randn(input_size, hidden_size) # 高斯分布初始化，需注意矩阵的大小！
+        self.params['W1'] = weight_init_std * np.random.randn(input_size, hidden_size) # 高斯分布初始化，需注意矩阵的大小！
         self.params['B1'] = np.zeros(hidden_size)
-        self.params['W2'] = np.random.randn(hidden_size, output_size)
+        self.params['W2'] = weight_init_std * np.random.randn(hidden_size, output_size)
         self.params['B2'] = np.zeros(output_size)
 
     # 神经元的内部实现：输入A，权重W，偏置B，激活函数g()，输出A_out
@@ -107,39 +110,55 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层
         A2 = self.dense(A1, W2, B2, softmax_function_trick) # layer 2
         return A2
 
-    # 计算损失/误差值
+    # 计算损失/误差值（回调函数）
     # loss_f 为损失函数
     def loss(self, loss_f, X, t):
-        y = self.predict(X) # 先进行推理
-        return loss_f(y, t) # 后用推理结果与监督数据计算损失值
+        y = self.predict(X)  # 先进行推理
+        return loss_f(y, t)  # 后用推理结果与正确解标签计算损失值
 
     # 梯度下降算法（采用数值微分方法）
     # loss_f 为损失函数
     def numerical_gradient_descent(self, loss_f, X, t):
-        loss_W = lambda W: self.loss(loss_f, X, t) # 定义匿名函数，参数为 W（没用），返回值为 loss(X, t)
+        # 定义匿名函数，参数为 W，返回值为 loss_f(y, t)
+        loss_W = lambda W: self.loss(loss_f, X, t)
+        grads = {}
 
-        self.grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
-        self.grads['B1'] = numerical_gradient(loss_W, self.params['B1'])
-        self.grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
-        self.grads['B2'] = numerical_gradient(loss_W, self.params['B2'])
+        grads['W1'] = numerical_gradient(loss_W, self.params['W1'])
+        grads['B1'] = numerical_gradient(loss_W, self.params['B1'])
+        grads['W2'] = numerical_gradient(loss_W, self.params['W2'])
+        grads['B2'] = numerical_gradient(loss_W, self.params['B2'])
 
-        return self.grads
+        return grads
 
     # 神经网络的学习
     def learning(self, X, t, loss_f=mean_squared_error, learning_rate=0.01, epochs=1000):
         self.loss_history = [] # 记录每次迭代的损失值
         self.grads = {}  # 记录参数 W 和 B 的梯度值
+
         for epoch in range(epochs):
             # 梯度下降算法
             self.grads = self.numerical_gradient_descent(loss_f, X, t)
             for key in ('W1', 'B1', 'W2', 'B2'):
                 self.params[key] -= learning_rate * self.grads[key]
 
+            # 识别精度
+            accuracy = self.accuracy(X, t, X.shape[0])
+            print(f"epoch {epoch}: train accuracy = {accuracy}")
+
             # 计算损失值
-            loss = self.loss(loss_f, x_train, t_train)
+            loss = self.loss(loss_f, X, t)
             self.loss_history.append(loss)
 
         return self.params, self.loss_history
+
+    # 神经网络参数的精度评价
+    def accuracy(self, X, t, num):
+        y = self.predict(X)
+        print(y)
+        y = np.argmax(y, axis=1)
+        t = np.argmax(t, axis=1)
+        accuracy = np.sum(y == t) / float(num)
+        return accuracy
 
 # ============================= other ===================================
 
@@ -157,7 +176,7 @@ if __name__ == '__main__':
     # x_train: (60000,784), t_train: (60000,10)
     (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=True, one_hot_label=True)
     learning_rate = 0.1  # 学习率
-    epochs = 10  # 迭代次数
+    epochs = 100  # 迭代次数
     loss_history = []
     params = {}
 
@@ -166,13 +185,12 @@ if __name__ == '__main__':
                           hidden_size = 50,
                           output_size = t_train.shape[1])
 
-    # 二层神经网络的学习
-    params, loss_history = network.learning(X = x_train[0:10, :],
-                                            t = t_train[0:10, :],
-                                            loss_f = log_loss_function,
+    # 二层神经网络的学习（只学习前 1000 个图像）
+    params, loss_history = network.learning(X = x_train[0:100, :],
+                                            t = t_train[0:100, :],
+                                            loss_f = mean_squared_error,
                                             learning_rate = learning_rate,
                                             epochs = epochs)
-    #print(f"result: {params}")
 
     # 绘制误差值的散点图
     x_axis = list(range(0, epochs))
