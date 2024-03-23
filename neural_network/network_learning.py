@@ -12,20 +12,16 @@ from dataset.mnist import load_mnist
 def sigmoid_function(x):
     return 1 / (1 + np.exp(-x))
 
-# softmax 函数
-def softmax_function(a):
-    exp_a = np.exp(a)
-    sum_exp_a = np.sum(exp_a)
-    y = exp_a / sum_exp_a
-    return y
-
 # 改良的 softmax 函数（防止在指数运算时发生溢出）
-def softmax_function_trick(a):
-    c = np.max(a)
-    exp_a = np.exp(a - c)
-    sum_exp_a = np.sum(exp_a)
-    y = exp_a / sum_exp_a
-    return y
+def softmax_function(x):
+    if x.ndim == 2:
+        x = x.T
+        x = x - np.max(x, axis=0)
+        y = np.exp(x) / np.sum(np.exp(x), axis=0)
+        return y.T
+
+    x = x - np.max(x)  # 溢出对策
+    return np.exp(x) / np.sum(np.exp(x))
 
 # ReLU 函数
 def relu_function(x):
@@ -47,8 +43,16 @@ def mean_squared_error(y, t):
 # 对数损失函数
 # 监督数据 t 为 one-hot 表示
 def log_loss_function(y, t):
-    delta = 1e-7  # 此处是防止出现 ln0 的情况
-    return -np.sum(t * np.log(y + delta))
+    if y.ndim == 1:
+        t = t.reshape(1, t.size)
+        y = y.reshape(1, y.size)
+
+    # 监督数据是one-hot-vector的情况下，转换为正确解标签的索引
+    if t.size == y.size:
+        t = t.argmax(axis=1)
+
+    size = y.shape[0]
+    return -np.sum(np.log(y[np.arange(size), t] + 1e-7)) / size
 
 # 数值微分（中心差分方法）
 # f 为以上损失函数二选一
@@ -70,7 +74,6 @@ def _numerical_gradient(f, x):
         # 计算中心差分
         grad[i] = (fxh1 - fxh2) / (2 * h)
         x[i] = tmp
-        #print(grad)
 
     return grad
 
@@ -107,7 +110,7 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层
         W1, W2 = self.params['W1'], self.params['W2']
         B1, B2 = self.params['B1'], self.params['B2']
         A1 = self.dense(X, W1, B1, sigmoid_function) # layer 1
-        A2 = self.dense(A1, W2, B2, softmax_function_trick) # layer 2
+        A2 = self.dense(A1, W2, B2, softmax_function) # layer 2
         return A2
 
     # 计算损失/误差值（回调函数）
@@ -131,11 +134,11 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层
         return grads
 
     # 神经网络的学习
-    def learning(self, X, t, loss_f=mean_squared_error, learning_rate=0.01, epochs=1000):
+    def learning(self, X, t, loss_f=mean_squared_error, learning_rate=0.01, iters=1000):
         self.loss_history = [] # 记录每次迭代的损失值
         self.grads = {}  # 记录参数 W 和 B 的梯度值
 
-        for epoch in range(epochs):
+        for i in range(iters):
             # 梯度下降算法
             self.grads = self.numerical_gradient_descent(loss_f, X, t)
             for key in ('W1', 'B1', 'W2', 'B2'):
@@ -143,7 +146,7 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层
 
             # 识别精度
             accuracy = self.accuracy(X, t, X.shape[0])
-            print(f"epoch {epoch}: train accuracy = {accuracy}")
+            print(f"iter {i}: train accuracy = {accuracy}")
 
             # 计算损失值
             loss = self.loss(loss_f, X, t)
@@ -154,7 +157,6 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层+隐藏层+输出层
     # 神经网络参数的精度评价
     def accuracy(self, X, t, num):
         y = self.predict(X)
-        print(y)
         y = np.argmax(y, axis=1)
         t = np.argmax(t, axis=1)
         accuracy = np.sum(y == t) / float(num)
@@ -176,7 +178,7 @@ if __name__ == '__main__':
     # x_train: (60000,784), t_train: (60000,10)
     (x_train, t_train), (x_test, t_test) = load_mnist(flatten=True, normalize=True, one_hot_label=True)
     learning_rate = 0.1  # 学习率
-    epochs = 100  # 迭代次数
+    iters = 1000  # 迭代次数
     loss_history = []
     params = {}
 
@@ -185,14 +187,14 @@ if __name__ == '__main__':
                           hidden_size = 50,
                           output_size = t_train.shape[1])
 
-    # 二层神经网络的学习（只学习前 1000 个图像）
+    # 二层神经网络的学习（只学习前 100 个图像）
     params, loss_history = network.learning(X = x_train[0:100, :],
                                             t = t_train[0:100, :],
-                                            loss_f = mean_squared_error,
+                                            loss_f = log_loss_function,
                                             learning_rate = learning_rate,
-                                            epochs = epochs)
+                                            iters = iters)
 
     # 绘制误差值的散点图
-    x_axis = list(range(0, epochs))
+    x_axis = list(range(0, iters))
     draw_scatter(x_axis, network.loss_history, "Loss Function in Every Epoch")
     plt.show()

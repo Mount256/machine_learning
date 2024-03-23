@@ -23,7 +23,7 @@ def cross_entropy_error(y, t):
         t = t.reshape(1, t.size)
         y = y.reshape(1, y.size)
 
-        # 监督数据是one-hot-vector的情况下，转换为正确解标签的索引
+    # 监督数据是one-hot-vector的情况下，转换为正确解标签的索引
     if t.size == y.size:
         t = t.argmax(axis=1)
 
@@ -222,7 +222,7 @@ class TwoLayerNet: # 一个有 2 层神经网络（输入层Affine + 隐藏层Re
 
 # ============================= 其它函数 other ===================================
 
-# 绘制散点图
+# 绘制折线图
 def draw_scatter(x, y, title):
     plt.xlabel("X-axis", size=15)
     plt.ylabel("Y-axis", size=15)
@@ -259,4 +259,8 @@ if __name__ == '__main__':
     iter_per_epoch = max(train_size / batch_size, 1)
     x = list(range(int(iters / iter_per_epoch) + 1))
     draw_scatter(x, acc_history, "Training Accuracy")
+    plt.show()
+
+    x = list(range(iters))
+    draw_scatter(x, loss_history, "Loss History")
     plt.show()
