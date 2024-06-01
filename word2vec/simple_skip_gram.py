@@ -4,8 +4,8 @@ import numpy as np
 from trainer import Trainer
 
 '''
-CBOW 模型使用的神经网络的输入是上下文，要预测（输出）的是被上下文包围的单词，
-这跟英语的【完形填空】是一样的
+skip-gram 模型使用的神经网络的输入是一个单词，要预测（输出）的是上下文单词，
+这跟英语的【完形填空】恰好相反
 '''
 
 # ============================= 公用函数 =============================
@@ -161,19 +161,19 @@ class SoftmaxWithLoss:
 
         return dx
 
-# ============================= CBOW 模型定义 =============================
-class SimpleCBOW:
+# ============================= skip-gram 模型定义 =============================
+class SimpleSkipGram:
     def __init__(self, vocab_size, hidden_size):
         V, H = vocab_size, hidden_size
         W_in = 0.01 * np.random.randn(V, H).astype('f')
         W_out = 0.01 * np.random.randn(H, V).astype('f')
 
-        self.in_layer0 = MatMul(W_in)
-        self.in_layer1 = MatMul(W_in)
+        self.in_layer = MatMul(W_in)
         self.out_layer = MatMul(W_out)
-        self.loss_layer = SoftmaxWithLoss()
+        self.loss_layer0 = SoftmaxWithLoss()
+        self.loss_layer1 = SoftmaxWithLoss()
 
-        layers = [self.in_layer0, self.in_layer1, self.out_layer]
+        layers = [self.in_layer, self.out_layer]
         self.params, self.grads = [], []
         for layer in layers:
             self.params += layer.params
@@ -182,23 +182,19 @@ class SimpleCBOW:
         self.word_vecs = W_in
 
     def forward(self, contexts, target):
-        c0 = np.array(contexts[:, 0]) # 上文单词的 one-hot 全部取出
-        c1 = np.array(contexts[:, 1]) # 下文单词的 one-hot 全部取出
-
-        h0 = self.in_layer0.forward(c0)
-        h1 = self.in_layer1.forward(c1)
-        h = 0.5 * (h0 + h1)
+        h = self.in_layer.forward(target)
         s = self.out_layer.forward(h)
-        l = self.loss_layer.forward(s, target)
-
+        l0 = self.loss_layer0.forward(s, contexts[:, 0])
+        l1 = self.loss_layer1.forward(s, contexts[:, 1])
+        l = l0 + l1
         return l
 
     def backward(self, dout=1):
-        ds = self.loss_layer.backward(dout)
-        da = self.out_layer.backward(ds)
-        da *= 0.5
-        self.in_layer0.backward(da)
-        self.in_layer1.backward(da)
+        dl0 = self.loss_layer0.backward(dout)
+        dl1 = self.loss_layer1.backward(dout)
+        ds = dl0 + dl1
+        dh = self.out_layer.backward(ds)
+        self.in_layer.backward(dh)
         return None
 
 # ============================= 优化器的定义 =============================
@@ -230,12 +226,11 @@ if __name__ == '__main__':
     target = convert_one_hot(target, vocab_size)
 
     '''
-    此 CBOW 结构如下：
+    此 skip-gram 结构如下：
       - 输入层（Matmul）大小：vocab_size * hidden_size，输入向量大小：(len(corpus)-window_size*2) * vocab_size
-      - 中间层（求平均）大小：(len(corpus)-window_size*2) * hidden_size
       - 输出层（Matmul）大小：hidden_size * vocab_size，输出向量大小：(len(corpus)-window_size*2) * vocab_size
     '''
-    model = SimpleCBOW(vocab_size, hidden_size)
+    model = SimpleSkipGram(vocab_size, hidden_size)
 
     # 优化器选择随机梯度下降算法
     optimizer = SGD()
