@@ -1,3 +1,4 @@
+# coding: utf-8
 import sys
 sys.path.append('..')
 import numpy as np
@@ -64,7 +65,7 @@ def cross_entropy_error(y, t):
     :param vocab_size: 词汇个数（不重复）
     :return: one-hot表示（二维或三维的NumPy数组）
     若输入为 contexts：输出为三维数组，大小为 (len(corpus)-window_size*2, window_size*2, vocab_size)
-    若输入为 tearget：输出为二维数组，大小为 (len(corpus)-window_size*2, vocab_size)
+    若输入为 target：输出为二维数组，大小为 (len(corpus)-window_size*2, vocab_size)
 '''
 def convert_one_hot(corpus, vocab_size):
     N = corpus.shape[0]
