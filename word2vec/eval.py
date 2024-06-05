@@ -4,6 +4,8 @@ sys.path.append('..')
 import numpy as np
 import pickle
 
+# CBOW 模型的评价
+
 '''
 向量之间的余弦相似度
 eps 的作用：当 x 或 y 为零向量时，避免出现除数为零的问题

@@ -3,6 +3,10 @@ import sys
 sys.path.append('..')
 import numpy as np
 import collections
+import os
+import pickle
+from dataset import ptb
+from trainer import Trainer
 
 '''
 CBOW 模型使用的神经网络的输入是上下文，要预测（输出）的是被上下文包围的单词，
@@ -163,10 +167,10 @@ class Embedding:
     def __init__(self, W):
         self.params = [W]
         self.grads = [np.zeros_like(W)]
-        self.idx = None  # 保存需要提取的行的索引（单词ID）
+        self.idx = None # 保存需要提取的行的索引（单词ID）
 
     def forward(self, idx):
-        W, = self.params  # 这里的逗号为了取出权重 W 而不是 [W]
+        W, = self.params # 这里的逗号为了取出权重 W 而不是 [W]
         self.idx = idx
         out = W[idx]
         return out
@@ -249,10 +253,89 @@ class NegativeSamplingLoss:
         return loss
 
     def backward(self, dout=1):
-        pass
+        dh = 0
+        for l0, l1 in zip(self.loss_layers, self.embed_dot_layers):
+            dscore = l0.backward(dout)
+            dh += l1.backward(dscore)
+        return dh
 
 # ============================= CBOW 模型定义 =============================
+class CBOW:
+    def __init__(self, vocab_size, hidden_size, window_size, corpus):
+        V, H = vocab_size, hidden_size
+        W_in = 0.01 * np.random.randn(V, H).astype('f')
+        W_out = 0.01 * np.random.randn(H, V).astype('f')
+
+        self.in_layers = []
+        for i in range(window_size * 2):
+            layer = Embedding(W_in)
+            self.in_layers.append(layer)
+        self.ns_loss = NegativeSamplingLoss(W_out, corpus, power=0.75, sample_size=5)
+
+        layers = self.in_layers + [self.ns_loss]
+        self.params, self.grads = [], []
+        for layer in layers:
+            self.params += layer.params
+            self.grads += layer.grads
+
+        self.word_vecs = W_in
+
+    def forward(self, contexts, target):
+        h = 0
+        for i, layer in enumerate(self.in_layers):
+            h += layer.forward(contexts[:, i])
+        h *= 1 / len(self.in_layers)
+        loss = self.ns_loss.forward(h, target)
+        return loss
+
+    def backward(self, dout=1):
+        dout = self.ns_loss.backward(dout)
+        dout *= 1 / len(self.in_layers)
+        for layer in self.in_layers:
+            layer.backward(dout)
+        return None
+
+# ============================= 优化器的定义 =============================
+'''
+随机梯度下降法（Stochastic Gradient Descent）
+'''
+class SGD:
+    def __init__(self, lr=0.01):
+        self.lr = lr
+
+    def update(self, params, grads):
+        for i in range(len(params)):
+            params[i] -= self.lr * grads[i]
 
 # ============================= 主程序 main ===================================
 if __name__ == '__main__':
-    pass
+    window_size = 5
+    hidden_size = 100
+    batch_size = 100
+    max_epoch = 10
+
+    # 读入训练集数据
+    corpus, word_to_id, id_to_word = ptb.load_data('train')
+    vocab_size = len(word_to_id)
+
+    # 生成上下文与目标词
+    contexts, target = create_contexts_target(corpus, window_size)
+
+    # 生成模型
+    model = CBOW(vocab_size, hidden_size, window_size, corpus)
+    optimizer = SGD()
+    trainer = Trainer(model, optimizer)
+
+    # 开始学习
+    trainer.fit(contexts, target, max_epoch, batch_size)
+    # trainer.plot()
+
+    # 保存训练好的参数
+    word_vecs = model.word_vecs
+    params = {}
+    params['word_vecs'] = word_vecs.astype(np.float16)
+    params['word_to_id'] = word_to_id
+    params['id_to_word'] = id_to_word
+    pkl_file = 'cbow_params.pkl'
+    with open(pkl_file, 'wb') as f:
+        pickle.dump(params, f, -1)
