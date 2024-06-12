@@ -12,6 +12,8 @@
 - `linear_regression`：线性回归、多元线性回归
 - `logistic_regression`：逻辑回归（二元分类）
 - `naive_bayes`：朴素贝叶斯模型
+- `decision_tree`：决策树模型
+- `support_vector_machines`：支持向量机和内核方法
 - `neural_network`：神经网络（包括BP神经网络）
 - `convolutional_neural_network`：卷积神经网络
 - `word2vec`：单词的分布式表示（CBOW模型）
