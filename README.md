@@ -3,7 +3,7 @@
 ## 注意
 
 - 本仓库的代码尽可能少地使用外部库，但numpy库和matplotlib库是刚需
-- 本仓库的所有代码暂时均不涉及机器学习框架、深度学习框架的使用
+- 本仓库的大部分代码暂时均不涉及机器学习框架、深度学习框架的使用
 
 ## 文件夹说明
 
@@ -16,7 +16,8 @@
 - `support_vector_machines`：支持向量机和内核方法
 - `neural_network`：神经网络（包括BP神经网络）
 - `convolutional_neural_network`：卷积神经网络
-- `word2vec`：单词的分布式表示（CBOW模型）
+- `recurrent_neural_network`：循环神经网络
+- `word2vec`：单词的分布式表示（CBOW模型和skip-gram模型）
 
 ## 参考书籍及课程
 

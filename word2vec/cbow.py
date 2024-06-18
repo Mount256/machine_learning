@@ -1,9 +1,7 @@
 # coding: utf-8
 import sys
 sys.path.append('..')
-import numpy as np
 import collections
-import os
 import pickle
 from dataset import ptb
 from trainer import Trainer
@@ -13,9 +11,31 @@ CBOW 模型使用的神经网络的输入是上下文，要预测（输出）的
 这跟英语的【完形填空】是一样的
 '''
 
-GPU = False # 是否使用 GPU 的标志
+GPU = True # 是否使用 GPU 的标志
+
+if GPU:
+    import cupy as np
+    np.cuda.set_allocator(np.cuda.MemoryPool().malloc)
+
+    print('\033[92m' + '-' * 60 + '\033[0m')
+    print(' ' * 23 + '\033[92mGPU Mode (cupy)\033[0m')
+    print('\033[92m' + '-' * 60 + '\033[0m\n')
+else:
+    import numpy as np
 
 # ============================= 公用函数 =============================
+def to_cpu(x):
+    import numpy
+    if type(x) == numpy.ndarray:
+        return x
+    return np.asnumpy(x)
+
+def to_gpu(x):
+    import cupy
+    if type(x) == cupy.ndarray:
+        return x
+    return cupy.asarray(x)
+
 '''
 生成上下文和目标词
     :param corpus: 语料库（单词ID列表）
@@ -182,13 +202,17 @@ class Embedding:
     # 在 x[1,1]、x[3,2]、x[0,1] 都加1
     idx = np.array([1, 3, 0])
     idy = np.array([1, 2, 1])
-    np.add.at(x, (idx , idy), 1)
+    np.add.at(x, (idx, idy), 1)
     '''
     def backward(self, dout):
-        dW = self.grads
+        dW, = self.grads
         dW[...] = 0 # 初始化为零矩阵
 
-        np.add.at(dW, self.idx, dout)
+        if GPU:
+            import cupyx
+            cupyx.scatter_add(dW, self.idx, dout)
+        else:
+            np.add.at(dW, self.idx, dout)
         return None
 
 '''
@@ -201,6 +225,8 @@ class EmbeddingDot:
         self.grads = self.embed.grads
         self.cache = None
 
+    # h：中间层
+    # idx：索引
     def forward(self, h, idx):
         target_W = self.embed.forward(idx)
         out = np.sum(target_W * h, axis=1)  # 逐元素相乘得到一个新矩阵，然后逐行求和得到一个列表
@@ -244,11 +270,11 @@ class NegativeSamplingLoss:
         loss = self.loss_layers[0].forward(score, correct_label)
 
         # 负例的正向传播
-        negative_label = np.zeros(batch_size, dtype=np.int32) # 生成负例对应的错确解标签（显然全部都为 0）
+        negative_label = np.zeros(batch_size, dtype=np.int32) # 生成负例对应的错误解标签（显然全部都为 0）
         for i in range(self.sample_size):
             negative_target = negative_sample[:, i]
-            score = self.embed_dot_layers[i + 1].forward(h, negative_target)
-            loss += self.loss_layers[i + 1].forward(score, negative_label)
+            score = self.embed_dot_layers[1 + i].forward(h, negative_target)
+            loss += self.loss_layers[1 + i].forward(score, negative_label)
 
         return loss
 
@@ -260,11 +286,24 @@ class NegativeSamplingLoss:
         return dh
 
 # ============================= CBOW 模型定义 =============================
+'''
+CBOW 由多个 Embedding 层和 1 个负采样层组成，具体构成如下：
+- Embedding 层：权重为 W_in(vocab_size, hidden_size)，个数为 2 * window_size
+  - 输入端：上下文 contexts(batch_size, 1)，其中 batch_size 为小批量样本大小
+  - 输出端：将 contexts(batch_size, 1) 作为行索引，取出 W_in 对应的行，大小为 out(batch_size, hidden_size)
+- 中间层：将上述所有 Embedding 层求平均得出此层，大小不变，仍为 h(batch_size, hidden_size)
+- NegativeSamplingLoss 层：由 1 个正例层 + sample_size 个负例层组成，每个层又由 EmbeddingDot + SigmoidWithLoss 组成
+  - EmbeddingDot 层：权重为 W_out(vocab_size, hidden_size)
+    - 输入端：为 h(batch_size, hidden_size) 和 target(batch_size, 1)
+    - 输出端：将 target(batch_size, 1) 作为行索引，取出 W_out 对应的行，大小为 target_W(batch_size, hidden_size)，
+          接着 target_W 与 h 逐元素相乘得到输出 out(batch_size, hidden_size)
+  - SigmoidWithLoss 层：输入和输出大小均为 (batch_size, hidden_size)
+'''
 class CBOW:
     def __init__(self, vocab_size, hidden_size, window_size, corpus):
         V, H = vocab_size, hidden_size
         W_in = 0.01 * np.random.randn(V, H).astype('f')
-        W_out = 0.01 * np.random.randn(H, V).astype('f')
+        W_out = 0.01 * np.random.randn(V, H).astype('f')
 
         self.in_layers = []
         for i in range(window_size * 2):
@@ -278,6 +317,7 @@ class CBOW:
             self.params += layer.params
             self.grads += layer.grads
 
+        # 将单词的分布式表示设置为成员变量
         self.word_vecs = W_in
 
     def forward(self, contexts, target):
@@ -307,6 +347,34 @@ class SGD:
         for i in range(len(params)):
             params[i] -= self.lr * grads[i]
 
+'''
+Adam (http://arxiv.org/abs/1412.6980v8)
+'''
+class Adam:
+    def __init__(self, lr=0.001, beta1=0.9, beta2=0.999):
+        self.lr = lr
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.iter = 0
+        self.m = None
+        self.v = None
+
+    def update(self, params, grads):
+        if self.m is None:
+            self.m, self.v = [], []
+            for param in params:
+                self.m.append(np.zeros_like(param))
+                self.v.append(np.zeros_like(param))
+
+        self.iter += 1
+        lr_t = self.lr * np.sqrt(1.0 - self.beta2 ** self.iter) / (1.0 - self.beta1 ** self.iter)
+
+        for i in range(len(params)):
+            self.m[i] += (1 - self.beta1) * (grads[i] - self.m[i])
+            self.v[i] += (1 - self.beta2) * (grads[i] ** 2 - self.v[i])
+
+            params[i] -= lr_t * self.m[i] / (np.sqrt(self.v[i]) + 1e-7)
+
 # ============================= 主程序 main ===================================
 if __name__ == '__main__':
     window_size = 5
@@ -320,18 +388,22 @@ if __name__ == '__main__':
 
     # 生成上下文与目标词
     contexts, target = create_contexts_target(corpus, window_size)
+    if GPU:
+        contexts, target = to_gpu(contexts), to_gpu(target)
 
     # 生成模型
     model = CBOW(vocab_size, hidden_size, window_size, corpus)
-    optimizer = SGD()
+    optimizer = Adam()
     trainer = Trainer(model, optimizer)
 
     # 开始学习
     trainer.fit(contexts, target, max_epoch, batch_size)
-    # trainer.plot()
+    trainer.plot()
 
     # 保存训练好的参数
     word_vecs = model.word_vecs
+    if GPU:
+        word_vecs = to_cpu(word_vecs)
     params = {}
     params['word_vecs'] = word_vecs.astype(np.float16)
     params['word_to_id'] = word_to_id

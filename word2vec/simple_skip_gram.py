@@ -246,7 +246,7 @@ if __name__ == '__main__':
       - batch_size：小批量样本大小
     '''
     trainer.fit(contexts, target, max_epoch, batch_size)
-    # trainer.plot()
+    trainer.plot()
 
     word_vecs = model.word_vecs
     for word_id, word in id_to_word.items():

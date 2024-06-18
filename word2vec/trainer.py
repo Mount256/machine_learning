@@ -31,13 +31,14 @@ class Trainer:
             t = t[idx]
 
             for iters in range(max_iters):
+                # 取出 batch_size 个单词训练
                 batch_x = x[iters*batch_size:(iters+1)*batch_size]
                 batch_t = t[iters*batch_size:(iters+1)*batch_size]
 
                 # 计算梯度，更新参数
                 loss = model.forward(batch_x, batch_t)
                 model.backward()
-                params, grads = remove_duplicate(model.params, model.grads)  # 将共享的权重整合为1个
+                params, grads = remove_duplicate(model.params, model.grads)  # 将共享的权重整合为 1 个
                 if max_grad is not None:
                     clip_grads(grads, max_grad)
                 optimizer.update(params, grads)
