@@ -2,7 +2,10 @@
 import sys
 sys.path.append('..')
 import numpy as np
+from dataset import ptb
 # from rnnlm_trainer import RnnlmTrainer
+
+GPU = False
 
 # ============================= 公用函数 =============================
 '''
@@ -35,8 +38,8 @@ class Embedding:
     def forward(self, idx):
         W, = self.params # 这里的逗号为了取出权重 W 而不是 [W]
         self.idx = idx
-        out = W[idx]
-        return out
+        out = W[idx] # 根据 idx 提取对应的权重行
+        return out # 返回提取后的权重值
 
     def backward(self, dout):
         dW, = self.grads
@@ -181,7 +184,7 @@ class TimeRNN:
 
         # 连接每个 RNN 层（一共 T 层）并反向传播
         for t in reversed(range(T)):
-            layer = self.layer[t]
+            layer = self.layers[t]
             # 每个 RNN 层正向传播的输出由两个分叉，则反向传播时流向 RNN 层的是求和后的梯度
             dx, dh = layer.backward(dhs[:, t, :] + dh)
             dxs[:, t, :] = dx
@@ -196,7 +199,11 @@ class TimeRNN:
         return dxs
 
 '''
-Time Embedding 层：由多个 Embedding 层组成
+Time Embedding 层：由多个 Embedding 层组成，每个层之间不用连接，单独处理即可
+- 输入端：x_s(N, T)，其中每个 Embedding 层输入为 x_i(N, )
+- 参数：每个 Embedding 层的权重大小为 W(V, D)
+- 输出端：将 x_s 作为行索引提取 W，形成 out(N, T, D)
+  - 其中：每个 Embedding 层将 x_i(N, ) 作为行索引提取 W，输出为 out_i(N, D)
 '''
 class TimeEmbedding:
     def __init__(self, W):
@@ -232,7 +239,10 @@ class TimeEmbedding:
         return None
 
 '''
-Time Affine 层：由多个 Affine 层组成
+Time Affine 层：由多个 Affine 层组成，每个层之间不用连接，单独处理即可
+- 输入端：x_s(N, T, H)，其中每个 Affine 层输入为 x_i(N, H)
+- 参数：每个 Affine 层均为 W(H, V)，b(V, )
+- 输出端：大小为 (N, T, V)，其中每个 Affine 层输出大小为 (N, V)
 '''
 class TimeAffine:
     def __init__(self, W, b):
@@ -244,17 +254,17 @@ class TimeAffine:
         N, T, D = x.shape
         W, b = self.params
 
-        rx = x.reshape(N*T, -1)
+        rx = x.reshape(N*T, -1) # 输入端展开为二维矩阵
         out = np.dot(rx, W) + b
         self.x = x
-        return out.reshape(N, T, -1)
+        return out.reshape(N, T, -1) # 恢复原形状
 
     def backward(self, dout):
         x = self.x
         N, T, D = x.shape
         W, b = self.params
 
-        dout = dout.reshape(N*T, -1)
+        dout = dout.reshape(N*T, -1) # 输入端展开为二维矩阵
         rx = x.reshape(N*T, -1)
 
         db = np.sum(dout, axis=0)
@@ -314,11 +324,12 @@ class TimeSoftmaxWithLoss:
 # ============================= RNNLM 的类定义 =============================
 '''
 RNNLM 层的构成如下：
-                                                          t_s（正确解标签）
+                                                          t_s(N,T)（正确解标签）
                                                             |
                                                             |
                                                             V
 w_s --> Time Embedding --> Time RNN --> Time Affine --> Time Softmax with Loss --> loss
+(N,T)                 (N,T,D)       (N,T,H)         (N,T,V)                    
 
 Xaiver 初始值：在上一层有 n 个节点的情况下，使用标准差为 1/sqrt(n) 的分布作为初始值
 '''
@@ -349,11 +360,11 @@ class SimpleRNNLM:
     def forward(self, xs, ts):
         for layer in self.layers:
             xs = layer.forward(xs)
-        loss = self.loss_layer.forward(xs)
+        loss = self.loss_layer.forward(xs, ts)
         return loss
 
     def backward(self, dout=1):
-        dout = self.loss_layer.forward(dout)
+        dout = self.loss_layer.backward(dout)
         for layer in reversed(self.layers):
             dout = layer.backward(dout)
         return dout
@@ -375,4 +386,75 @@ class SGD:
 
 # ============================= 主程序 main ===================================
 if __name__ == '__main__':
-    pass
+    # 设定超参数
+    batch_size = 10 # (N=10)
+    wordvec_size = 100 # (D=100)
+    hidden_size = 100 # RNN 层的隐藏状态向量的元素个数 (H=100)
+    time_size = 5 # Truncated BPTT 的时间跨度大小 (T=5)
+    lr = 0.1 # 学习率
+    max_epoch = 100
+
+    # 读入训练集数据（只训练前 1000 个单词）
+    corpus, word_to_id, id_to_word = ptb.load_data('train')
+    corpus_size = 1000
+    corpus = corpus[:corpus_size]
+    vocab_size = int(max(corpus) + 1) # (V=418)
+
+    xs = corpus[:-1] # 输入（共 999 个）
+    ts = corpus[1:] # 输出（监督标签，共 999 个）
+    data_size = len(xs) # 999
+    print('corpus size: %d, vocabulary size: %d' % (corpus_size, vocab_size))
+
+    # 计算读入 mini-batch 的各笔数据的开始位置
+    jump = (corpus_size - 1) // batch_size
+    offsets = [i * jump for i in range(batch_size)]
+    # [0, 99, 198, 297, 396, 495, 594, 693, 792, 891]
+
+    # 生成模型
+    model = SimpleRNNLM(vocab_size, wordvec_size, hidden_size) # V=418, D=100, H=100
+    optimizer = SGD(lr)
+
+    max_iters = data_size // (batch_size * time_size) # 999 div (10 * 5) = 19
+    time_idx = 0
+    total_loss = 0
+    loss_count = 0
+    perplexity_lst = []
+
+    '''
+    time_size = 5, batch_size = 10,
+    第一个 epoch 完成的事情：
+    iter 0 小批量训练: [[0:5] [99:104] [198:203] [297:302] [396:401] [495:500] [594:599] [693:698] [792:797] [891:896]]
+    iter 1 小批量训练: [[5:10] [104:109] [203:208] [302:307] [401:406] [500:505] [599:604] [698:703] [797:802] [896:901]]
+    iter 2 小批量训练: [[10:15] [109:115] ... [901:906]]
+            ...
+    iter 18 小批量训练: [[90:95] [189:194] ... [981:986]]
+    每个 iter 中，batch_x[:, t] 作为向量输入到 time embedding 中（见《深度学习进阶：自然语言处理》P191图）
+    接下来第二个 epoch 完成的事情：
+    iter 0 小批量训练: [[95:100] [194:199] ... [986:991]] ...
+           ...
+    '''
+    for epoch in range(max_epoch): # 每个 epoch 后视为所有样本已被“查看一遍”（共 10 次）
+        for iter in range(max_iters): # 每次 iter 对小批量样本学习（共 19 次）
+            # 获取 mini-batch
+            batch_x = np.empty((batch_size, time_size), dtype='i')
+            batch_t = np.empty((batch_size, time_size), dtype='i')
+
+            for t in range(time_size):
+                for i, offset in enumerate(offsets):
+                    batch_x[i, t] = xs[(offset + time_idx) % data_size]
+                    batch_t[i, t] = xs[(offset + time_idx) % data_size]
+                time_idx += 1
+
+            loss = model.forward(batch_x, batch_t)
+            model.backward() # 计算梯度
+            optimizer.update(model.params, model.grads) # 更新参数
+            total_loss += loss
+            loss_count += 1
+
+        # 每个 epoch 的困惑度评价
+        perplexity = np.exp(total_loss / loss_count)
+        perplexity_lst.append(float(perplexity))
+        print('| epoch %d | perplexity %.2f' % (epoch+1, perplexity))
+        total_loss = 0
+        loss_count = 0
+

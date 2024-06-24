@@ -40,7 +40,7 @@ def remove_duplicate(params, grads):
 
     return params, grads
 
-
+# 梯度裁剪：解决梯度爆炸的问题
 def clip_grads(grads, max_norm):
     total_norm = 0
     for grad in grads:
