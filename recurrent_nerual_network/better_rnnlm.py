@@ -6,7 +6,7 @@ from dataset import ptb
 from rnnlm_trainer import RnnlmTrainer
 from rnnlm_trainer import eval_perplexity
 
-GPU = False # 是否使用 GPU 的标志
+GPU = True # 是否使用 GPU 的标志
 
 if GPU:
     import cupy as np
@@ -338,6 +338,29 @@ class TimeAffine:
         return dx
 
 '''
+Time Dropout 层：用于抑制过拟合
+'''
+class TimeDropout:
+    def __init__(self, dropout_ratio=0.5):
+        self.params, self.grads = [], []
+        self.dropout_ratio = dropout_ratio
+        self.mask = None # 随机生成和 xs 形状相同的数组，并将大于 ratio 的元素设为 True
+        self.train_flag = True
+
+    def forward(self, xs):
+        if self.train_flag:
+            flag = np.random.rand(*xs.shape) > self.dropout_ratio
+            scale = 1 / (1.0 - self.dropout_ratio)
+            self.mask = flag.astype(np.float32) * scale
+
+            return xs * self.mask
+        else:
+            return xs
+
+    def backward(self, dout):  # 反向传播的行为与 ReLU 相同
+        return dout * self.mask
+
+'''
 Time SoftmaxWithLoss 层：由多个 SoftmaxWithLoss 层组成
 '''
 class TimeSoftmaxWithLoss:
@@ -384,48 +407,46 @@ class TimeSoftmaxWithLoss:
         return dx
 
 # ============================= RNNLM 的类定义 =============================
-'''
-RNNLM 层的构成如下：
-                                                          t_s(N,T)（正确解标签）
-                                                            |
-                                                            |
-                                                            V
-w_s --> Time Embedding --> Time LSTM --> Time Affine --> Time Softmax with Loss --> loss
-(N,T)                 (N,T,D)       (N,T,H)         (N,T,V)                    
-
-Xaiver 初始值：在上一层有 n 个节点的情况下，使用标准差为 1/sqrt(n) 的分布作为初始值
-'''
 class RNNLM:
-    def __init__(self, vocab_size=10000, wordvec_size=100, hidden_size=100):
+    def __init__(self, vocab_size=10000, wordvec_size=650, hidden_size=650, dropout_ratio=0.5):
         # 小批量样本个数，向量维数，隐藏层维数
         V, D, H = vocab_size, wordvec_size, hidden_size
 
         # 初始化权重
         embed_W = (np.random.randn(V, D) / 100).astype('f')  # 正态分布初始值
-        lstm_Wx = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
-        lstm_Wh = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
-        lstm_b = np.zeros(4 * H).astype('f')
-        affine_W = (np.random.randn(H, V) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        lstm_Wx1 = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
+        lstm_Wh1 = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        lstm_b1 = np.zeros(4 * H).astype('f')
+        lstm_Wx2 = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
+        lstm_Wh2 = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        lstm_b2 = np.zeros(4 * H).astype('f')
         affine_b = np.zeros(V).astype('f')
 
         self.layers = [TimeEmbedding(embed_W),
-                       TimeLSTM(lstm_Wx, lstm_Wh, lstm_b),
-                       TimeAffine(affine_W, affine_b)]
+                       TimeDropout(dropout_ratio),
+                       TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful=True),
+                       TimeDropout(dropout_ratio),
+                       TimeLSTM(lstm_Wx2, lstm_Wh2, lstm_b2, stateful=True),
+                       TimeDropout(dropout_ratio),
+                       TimeAffine(embed_W.T, affine_b)] # 权重共享
         self.loss_layer = TimeSoftmaxWithLoss()
-        self.lstm_layer = self.layers[1]  # 专门设置一个 RNN 成员变量保存 TimeRNN 层
+        self.lstm_layers = [self.layers[2], self.layers[4]]  # 专门设置一个 RNN 成员变量保存 TimeRNN 层
+        self.drop_layers = [self.layers[1], self.layers[3], self.layers[5]]
 
         self.params, self.grads = [], []
         for layer in self.layers:
             self.params += layer.params
             self.grads += layer.grads
 
-    def predict(self, xs):
+    def predict(self, xs, train_flag=False):
+        for layer in self.drop_layers:
+            layer.train_flag = train_flag
         for layer in self.layers:
             xs = layer.forward(xs)
         return xs
 
-    def forward(self, xs, ts):
-        score = self.predict(xs)
+    def forward(self, xs, ts, train_flag=True):
+        score = self.predict(xs, train_flag)
         loss = self.loss_layer.forward(score, ts)
         return loss
 
@@ -436,16 +457,17 @@ class RNNLM:
         return dout
 
     def reset_state(self):
-        self.lstm_layer.reset_state()
+        for layer in self.lstm_layers:
+            layer.reset_state()
 
-    def save_params(self, file_name='RNNLM.pkl'):
+    def save_params(self, file_name):
         params = [p.astype(np.float16) for p in self.params]
         if GPU:
             params = [to_cpu(p) for p in params]
         with open(file_name, 'wb') as f:
             pickle.dump(params, f)
 
-    def load_params(self, file_name='RNNLM.pkl'):
+    def load_params(self, file_name):
         with open(file_name, 'rb') as f:
             params = pickle.load(f)
         params = [p.astype('f') for p in params]
@@ -470,35 +492,45 @@ class SGD:
 if __name__ == '__main__':
     # 设定超参数
     batch_size = 20  # (N=20)
-    wordvec_size = 100  # (D=100)
-    hidden_size = 100  # LSTM 层的隐藏状态向量的元素个数 (H=100)
+    wordvec_size = 650  # (D=650)
+    hidden_size = 650  # LSTM 层的隐藏状态向量的元素个数 (H=650)
     time_size = 35  # Truncated BPTT 的时间跨度大小 (T=35)
     lr = 20.0  # 学习率
-    max_epoch = 4
+    max_epoch = 5
     max_grad = 0.25
+    dropout_ratio = 0.5
 
     # 读入训练集数据
-    corpus, word_to_id, id_to_word = ptb.load_data('train')
-    corpus_t, _, _ = ptb.load_data('test')
+    corpus, word_to_id, id_to_word = ptb.load_data('train') # 训练用数据集
+    corpus_val, _, _ = ptb.load_data('val') # 验证数据集（用于调整超参数）
+    corpus_test, _, _ = ptb.load_data('test') # 测试数据集
+
     xs = corpus[:-1]  # 输入
     ts = corpus[1:]  # 输出（监督标签）
     vocab_size = len(word_to_id)
-    if GPU:
-        xt, ts = to_gpu(xs), to_gpu(ts)
 
     # 生成模型
-    model = RNNLM(vocab_size, wordvec_size, hidden_size)  # V=vocab_size, D=100, H=100
+    model = RNNLM(vocab_size, wordvec_size, hidden_size, dropout_ratio)  # V=vocab_size, D=100, H=100
     optimizer = SGD(lr)
     trainer = RnnlmTrainer(model, optimizer)
 
-    # 模型训练
-    trainer.fit(xs, ts, max_epoch, batch_size, time_size, max_grad, eval_interval=20)
-    trainer.plot(ylim=(0, 500))
+    best_ppl = float('inf') # 记录困惑度最低的值
+    for epoch in range(max_epoch): # 每轮 epoch 使用验证数据评价困惑度，并不断缩小超参数（学习率）的范围
+        # 模型训练
+        trainer.fit(xs, ts, max_epoch=1, batch_size=batch_size, time_size=time_size, max_grad=max_grad, eval_interval=20)
 
-    # 基于测试数据进行困惑度评价
-    model.reset_state()
-    ppl_test = eval_perplexity(model, corpus_t)
-    print('test perplexity: ', ppl_test)
+        # 基于测试数据进行困惑度评价
+        model.reset_state()
+        ppl = eval_perplexity(model, corpus_val)
+        print('valid perplexity: ', ppl)
 
-    # 保存参数
-    model.save_params()
+        # 当前困惑度比之前低时，缩小学习率
+        if best_ppl > ppl:
+            best_ppl = ppl
+            model.save_params("BetterRNNLM.pkl") # 保存参数
+        else:
+            lr /= 4.0
+            optimizer.lr = lr
+
+        model.reset_state()
+        print('-' * 50)
