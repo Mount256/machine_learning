@@ -19,9 +19,9 @@
 - `support_vector_machines`：支持向量机和内核方法
 - `neural_network`：神经网络（包括BP神经网络）
 - `convolutional_neural_network`：卷积神经网络
-- `recurrent_neural_network`：循环神经网络（包括RNNLM和LSTM）
+- `recurrent_neural_network`：循环神经网络（包括RNNLM和LSTM），并使用语言模型生成文本
 - `word2vec`：单词的分布式表示（CBOW模型和skip-gram模型）
-- 'sqe2seq'：从时序到时序，使用语言模型生成文本
+- 'sqe2seq'：从时序到时序
 - 'attention'：注意力机制
 
 ## 参考书籍及课程
