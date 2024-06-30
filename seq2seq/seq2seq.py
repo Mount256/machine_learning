@@ -1,36 +1,19 @@
 # coding: utf-8
 import sys
+import os
 sys.path.append('..')
-import pickle
-from dataset import ptb
-from rnnlm_trainer import RnnlmTrainer
-from rnnlm_trainer import eval_perplexity
+from dataset import sequence
+from trainer import Trainer
+from trainer import eval_seq2seq
+import numpy as np
 
-GPU = True # 是否使用 GPU 的标志
-
-if GPU:
-    import cupy as np
-    np.cuda.set_allocator(np.cuda.MemoryPool().malloc)
-
-    print('\033[92m' + '-' * 60 + '\033[0m')
-    print(' ' * 23 + '\033[92mGPU Mode (cupy)\033[0m')
-    print('\033[92m' + '-' * 60 + '\033[0m\n')
-else:
-    import numpy as np
+'''
+我们将“加法”视为一个时序转换问题：
+在 seq2seq 学习后，如果输入字符串“57+5”，seq2seq 要能正确回答“62”。
+这种为了评价机器学习而创建的简单问题，称为“toy problem”。
+'''
 
 # ============================= 公用函数 =============================
-def to_cpu(x):
-    import numpy
-    if type(x) == numpy.ndarray:
-        return x
-    return np.asnumpy(x)
-
-def to_gpu(x):
-    import cupy
-    if type(x) == cupy.ndarray:
-        return x
-    return cupy.asarray(x)
-
 '''
 Softmax 函数
 '''
@@ -75,12 +58,7 @@ class Embedding:
         dW, = self.grads
         dW[...] = 0 # 初始化为零矩阵
 
-        if GPU:
-            import cupyx
-            cupyx.scatter_add(dW, self.idx, dout)
-        else:
-            np.add.at(dW, self.idx, dout)
-        return None
+        np.add.at(dW, self.idx, dout)
 
 '''
 LSTM 层：Long Short-term Memory（长短期记忆）的缩写，意思是长时间维持短期记忆
@@ -244,7 +222,7 @@ class TimeLSTM:
         self.stateful = stateful
 
     # 设定隐藏状态
-    def set_state(self, h, c):
+    def set_state(self, h, c=None):
         self.h, self.c = h, c
 
     # 重设隐藏状态
@@ -338,29 +316,6 @@ class TimeAffine:
         return dx
 
 '''
-Time Dropout 层：用于抑制过拟合
-'''
-class TimeDropout:
-    def __init__(self, dropout_ratio=0.5):
-        self.params, self.grads = [], []
-        self.dropout_ratio = dropout_ratio
-        self.mask = None # 随机生成和 xs 形状相同的数组，并将大于 ratio 的元素设为 True
-        self.train_flag = True
-
-    def forward(self, xs):
-        if self.train_flag:
-            flag = np.random.rand(*xs.shape) > self.dropout_ratio
-            scale = 1 / (1.0 - self.dropout_ratio)
-            self.mask = flag.astype(np.float32) * scale
-
-            return xs * self.mask
-        else:
-            return xs
-
-    def backward(self, dout):  # 反向传播的行为与 ReLU 相同
-        return dout * self.mask
-
-'''
 Time SoftmaxWithLoss 层：由多个 SoftmaxWithLoss 层组成
 '''
 class TimeSoftmaxWithLoss:
@@ -376,8 +331,6 @@ class TimeSoftmaxWithLoss:
             ts = ts.argmax(axis=2)
 
         mask = (ts != self.ignore_label)
-        if GPU:
-            mask = to_gpu(mask)
 
         # 按批次大小和时序大小进行整理（reshape）
         xs = xs.reshape(N * T, V)
@@ -406,75 +359,146 @@ class TimeSoftmaxWithLoss:
 
         return dx
 
-# ============================= RNNLM 的类定义 =============================
-class RNNLM:
-    def __init__(self, vocab_size=10000, wordvec_size=650, hidden_size=650, dropout_ratio=0.5):
+# ============================= 神经网络的定义 =============================
+'''
+Encoder 的构成如下：
+字符向量 xs --> Time Embedding --> Time LSTM --> （丢弃）
+                                   |
+                                   ----> h （最后一层 LSTM 输出隐藏状态）
+'''
+class Encoder:
+    def __init__(self, vocab_size, wordvec_size, hidden_size):
         # 小批量样本个数，向量维数，隐藏层维数
         V, D, H = vocab_size, wordvec_size, hidden_size
 
         # 初始化权重
         embed_W = (np.random.randn(V, D) / 100).astype('f')  # 正态分布初始值
-        lstm_Wx1 = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
-        lstm_Wh1 = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
-        lstm_b1 = np.zeros(4 * H).astype('f')
-        lstm_Wx2 = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
-        lstm_Wh2 = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
-        lstm_b2 = np.zeros(4 * H).astype('f')
+        lstm_Wx = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
+        lstm_Wh = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        lstm_b = np.zeros(4 * H).astype('f')
+
+        self.embed = TimeEmbedding(embed_W)
+        self.lstm = TimeLSTM(lstm_Wx, lstm_Wh, lstm_b, stateful=False)
+
+        self.params = self.embed.params + self.lstm.params
+        self.grads = self.embed.grads + self.lstm.grads
+        self.hs = None
+
+    def forward(self, xs):
+        xs = self.embed.forward(xs)
+        hs = self.lstm.forward(xs)
+        self.hs = hs
+        return hs[:, -1, :]
+
+    def backward(self, dh):
+        dhs = np.zeros_like(self.hs)
+        dhs[:, -1, :] = dh
+
+        dout = self.lstm.backward(dhs)
+        dout = self.embed.backward(dout)
+        return dout
+
+'''
+Decoder 的构成如下：
+字符向量 xs --> Time Embedding --> Time LSTM --> Time Affine --> 不属于Decoder范围 (Time softmax with Loss --> 损失)
+                                    ^
+                                    |
+                                    ---- h （Encoder 输出的隐藏状态）
+'''
+class Decoder:
+    def __init__(self, vocab_size, wordvec_size, hidden_size):
+        # 小批量样本个数，向量维数，隐藏层维数
+        V, D, H = vocab_size, wordvec_size, hidden_size
+
+        # 初始化权重
+        embed_W = (np.random.randn(V, D) / 100).astype('f')  # 正态分布初始值
+        lstm_Wx = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
+        lstm_Wh = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        lstm_b = np.zeros(4 * H).astype('f')
+        affine_W = (np.random.randn(H, V) / np.sqrt(H)).astype('f')  # Xaiver 初始值
         affine_b = np.zeros(V).astype('f')
 
-        self.layers = [TimeEmbedding(embed_W),
-                       TimeDropout(dropout_ratio),
-                       TimeLSTM(lstm_Wx1, lstm_Wh1, lstm_b1, stateful=True),
-                       TimeDropout(dropout_ratio),
-                       TimeLSTM(lstm_Wx2, lstm_Wh2, lstm_b2, stateful=True),
-                       TimeDropout(dropout_ratio),
-                       TimeAffine(embed_W.T, affine_b)] # 权重共享
-        self.loss_layer = TimeSoftmaxWithLoss()
-        self.lstm_layers = [self.layers[2], self.layers[4]]  # 专门设置一个 RNN 成员变量保存 TimeRNN 层
-        self.drop_layers = [self.layers[1], self.layers[3], self.layers[5]]
+        self.embed = TimeEmbedding(embed_W)
+        self.lstm = TimeLSTM(lstm_Wx, lstm_Wh, lstm_b, stateful=True)
+        self.affine = TimeAffine(affine_W, affine_b)
 
         self.params, self.grads = [], []
-        for layer in self.layers:
+        for layer in (self.embed, self.lstm, self.affine):
             self.params += layer.params
             self.grads += layer.grads
 
-    def predict(self, xs, train_flag=False):
-        for layer in self.drop_layers:
-            layer.train_flag = train_flag
-        for layer in self.layers:
-            xs = layer.forward(xs)
-        return xs
+    def forward(self, xs, h):
+        self.lstm.set_state(h)
 
-    def forward(self, xs, ts, train_flag=True):
-        score = self.predict(xs, train_flag)
-        loss = self.loss_layer.forward(score, ts)
+        out = self.embed.forward(xs)
+        out = self.lstm.forward(out)
+        score = self.affine.forward(out)
+        return score
+
+    def backward(self, dscore):
+        dout = self.affine.backward(dscore)
+        dout = self.lstm.backward(dout)
+        dout = self.embed.backward(dout)
+        dh = self.lstm.dh
+        return dh
+
+    # 生成字符
+    # h：编码器输出的隐藏状态，start_id：第一个字符 ID，sample_size：生成字符的数量
+    def generate(self, h, start_id, sample_size):
+        sampled = [] # 存放已被采样的字符 ID
+        sample_id = start_id # 存放正在被采样的字符 ID
+        self.lstm.set_state(h)
+
+        for _ in range(sample_size):
+            x = np.array(sample_id).reshape(1, 1)  # 由于网络的输入必须为矩阵，所以要预先将 sample_id 转化为矩阵形式
+            out = self.embed.forward(x)
+            out = self.lstm.forward(out)
+            score = self.affine.forward(out)
+
+            sample_id = np.argmax(score.flatten()) # 选取得分最高的字符 ID
+            sampled.append(int(sample_id))
+
+        return sampled
+
+'''
+seq2seq 的构成如下：
+                                        ts（监督数据）
+                            |            |
+                            |            |
+                            V            V
+xs --> Encoder --> h --> Decoder --> Time softmax with Loss --> 损失
+'''
+class Seq2seq:
+    def __init__(self, vocab_size, wordvec_size, hidden_size):
+        # 小批量样本个数，向量维数，隐藏层维数
+        V, D, H = vocab_size, wordvec_size, hidden_size
+        self.encoder = Encoder(V, D, H)
+        self.decoder = Decoder(V, D, H)
+        self.softmax = TimeSoftmaxWithLoss()
+
+        self.params = self.encoder.params + self.decoder.params
+        self.grads = self.encoder.grads + self.decoder.grads
+
+    def forward(self, xs, ts):
+        decoder_xs, decoder_ts = ts[:, :-1], ts[:, 1:] # ???
+
+        h = self.encoder.forward(xs)
+        score = self.decoder.forward(decoder_xs, h)
+        loss = self.softmax.forward(score, decoder_ts)
         return loss
 
     def backward(self, dout=1):
-        dout = self.loss_layer.backward(dout)
-        for layer in reversed(self.layers):
-            dout = layer.backward(dout)
+        dout = self.softmax.backward(dout)
+        dh = self.decoder.backward(dout)
+        dout = self.encoder.backward(dh)
         return dout
 
-    def reset_state(self):
-        for layer in self.lstm_layers:
-            layer.reset_state()
-
-    def save_params(self, file_name):
-        params = [p.astype(np.float16) for p in self.params]
-        if GPU:
-            params = [to_cpu(p) for p in params]
-        with open(file_name, 'wb') as f:
-            pickle.dump(params, f)
-
-    def load_params(self, file_name):
-        with open(file_name, 'rb') as f:
-            params = pickle.load(f)
-        params = [p.astype('f') for p in params]
-        if GPU:
-            params = [to_gpu(p) for p in params]
-        for i, param in enumerate(self.params):
-            param[...] = params[i]
+    # 生成字符
+    # h：编码器输出的隐藏状态，start_id：第一个字符 ID，sample_size：生成字符的数量
+    def generate(self, xs, start_id, sample_size):
+        h = self.encoder.forward(xs)
+        sampled = self.decoder.generate(h, start_id, sample_size)
+        return sampled
 
 # ============================= 优化器的定义 =============================
 '''
@@ -488,49 +512,63 @@ class SGD:
         for i in range(len(params)):
             params[i] -= self.lr * grads[i]
 
+'''
+Adam (http://arxiv.org/abs/1412.6980v8)
+'''
+class Adam:
+    def __init__(self, lr=0.001, beta1=0.9, beta2=0.999):
+        self.lr = lr
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.iter = 0
+        self.m = None
+        self.v = None
+
+    def update(self, params, grads):
+        if self.m is None:
+            self.m, self.v = [], []
+            for param in params:
+                self.m.append(np.zeros_like(param))
+                self.v.append(np.zeros_like(param))
+
+        self.iter += 1
+        lr_t = self.lr * np.sqrt(1.0 - self.beta2 ** self.iter) / (1.0 - self.beta1 ** self.iter)
+
+        for i in range(len(params)):
+            self.m[i] += (1 - self.beta1) * (grads[i] - self.m[i])
+            self.v[i] += (1 - self.beta2) * (grads[i] ** 2 - self.v[i])
+
+            params[i] -= lr_t * self.m[i] / (np.sqrt(self.v[i]) + 1e-7)
+
 # ============================= 主程序 main ===================================
 if __name__ == '__main__':
+    # 读入数据集
+    (x_train, t_train), (x_test, t_test) = sequence.load_data('addition.txt', seed=1984)
+    char_to_id, id_to_char = sequence.get_vocab()
+
     # 设定超参数
-    batch_size = 20  # (N=20)
-    wordvec_size = 650  # (D=650)
-    hidden_size = 650  # LSTM 层的隐藏状态向量的元素个数 (H=650)
-    time_size = 35  # Truncated BPTT 的时间跨度大小 (T=35)
-    lr = 20.0  # 学习率
-    max_epoch = 20
-    max_grad = 0.25
-    dropout_ratio = 0.5
-
-    # 读入训练集数据
-    corpus, word_to_id, id_to_word = ptb.load_data('train') # 训练用数据集
-    corpus_val, _, _ = ptb.load_data('val') # 验证数据集（用于调整超参数）
-    corpus_test, _, _ = ptb.load_data('test') # 测试数据集
-
-    xs = corpus[:-1]  # 输入
-    ts = corpus[1:]  # 输出（监督标签）
-    vocab_size = len(word_to_id)
+    batch_size = 128  # (N=128)
+    vocab_size = len(char_to_id) # (V=13)
+    wordvec_size = 16  # (D=16)
+    hidden_size = 128  # 隐藏状态向量的元素个数 (H=128)
+    max_epoch = 25
+    max_grad = 5.0 # 用于梯度裁剪
 
     # 生成模型
-    model = RNNLM(vocab_size, wordvec_size, hidden_size, dropout_ratio)  # V=vocab_size, D=100, H=100
-    optimizer = SGD(lr)
-    trainer = RnnlmTrainer(model, optimizer)
+    model = Seq2seq(vocab_size, wordvec_size, hidden_size)
+    optimizer = Adam()
+    trainer = Trainer(model, optimizer)
 
-    best_ppl = float('inf') # 记录困惑度最低的值
-    for epoch in range(max_epoch): # 每轮 epoch 使用验证数据评价困惑度，并不断缩小超参数（学习率）的范围
-        # 模型训练
-        trainer.fit(xs, ts, max_epoch=1, batch_size=batch_size, time_size=time_size, max_grad=max_grad, eval_interval=20)
+    acc_list = []
+    for epoch in range(max_epoch):
+        trainer.fit(x_train, t_train, max_epoch=1, batch_size=batch_size, max_grad=max_grad)
 
-        # 基于测试数据进行困惑度评价
-        model.reset_state()
-        ppl = eval_perplexity(model, corpus_val)
-        print('valid perplexity: ', ppl)
+        correct_num = 0
+        for i in range(len(x_test)):
+            question, correct = x_test[[i]], t_test[[i]]
+            verbose = i < 10
+            correct_num += eval_seq2seq(model, question, correct, id_to_char, verbose)
+        acc = float(correct_num) / len(x_test)
+        acc_list.append(acc)
+        print("val acc %.3f%%" % (acc * 100))
 
-        # 当前困惑度比之前低时，缩小学习率
-        if best_ppl > ppl:
-            best_ppl = ppl
-            model.save_params("BetterRNNLM.pkl") # 保存参数
-        else:
-            lr /= 4.0
-            optimizer.lr = lr
-
-        model.reset_state()
-        print('-' * 50)

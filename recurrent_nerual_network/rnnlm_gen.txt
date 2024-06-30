@@ -1,0 +1,17 @@
+D:\ProgramData\Anaconda3\envs\myenvs\python.exe E:/machine_learning/recurrent_nerual_network/rnnlm_gen.py
+E:\machine_learning\recurrent_nerual_network\rnnlm_gen.py:54: DeprecationWarning: Conversion of an array with ndim > 0 to a scalar is deprecated, and will error in future. Ensure you extract a single element from your array before performing this operation. (Deprecated NumPy 1.25.)
+  word_ids.append(int(x))
+you 've been hutton not weaken trends in several companies each day that it will make an garage would allow corporations including july and denied it was viewed unknown is concerned about half of their work force searching for a trend in immediate atlantic hospital.
+ the same amount singapore the disease mr. lawson 's misleading will duck.
+ other intimate status has seen as well meaning a while companies might lead the week to set from a attract tanker commissioners have five shares outstanding.
+ done only last week.
+ frank david jacobson leaders racial brain payouts from december
+--------------------------------------------------
+the meaning of life is obtained work.
+ big spending rates drives 's largest in the line-item veto the case where requires american express she stepped below it acquired it building pulp and make a series.
+ the bright for current mainframe 's sell-off.
+ some of l.j. data across the globe in the belt to be sold stock exchange rates.
+ he bought to calculate olympic activities at an apple.
+ the reagan posted in stein successful exchanges press which owns and analytical corp. began next year and attributes to about a traditional eighth groups this man at home corp. task and they
+
+Process finished with exit code 0

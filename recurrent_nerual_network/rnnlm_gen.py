@@ -64,8 +64,7 @@ if __name__ == '__main__':
 
     model = RnnlmGen()
     # 如果不使用训练好的权重数据，则生成的是杂乱无章的文本，因为网络权重值都是随机的
-    model.load_params('book_rnnlm.pkl') # 取出训练好的权重数据
-    # model.load_params('rnnlm.pkl')  # 取出训练好的权重数据
+    model.load_params('RNNLM.pkl')  # 取出训练好的权重数据
 
     # 指定一个单词，生成文本
     start_word = 'you'

@@ -155,8 +155,8 @@ class LSTM:
         dx = np.dot(dA, Wx.T)
         dh_prev = np.dot(dA, Wh.T)
 
-        self.grads[0][...] = dWh
-        self.grads[1][...] = dWx
+        self.grads[0][...] = dWx
+        self.grads[1][...] = dWh
         self.grads[2][...] = db
 
         return dx, dh_prev, dc_prev
