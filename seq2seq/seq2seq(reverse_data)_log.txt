@@ -1,0 +1,1478 @@
+D:\ProgramData\Anaconda3\envs\myenvs\python.exe E:/machine_learning/seq2seq/seq2seq.py
+| epoch 1 |  iter 1 / 351 | time 1[s] | loss 2.56
+| epoch 1 |  iter 21 / 351 | time 11[s] | loss 2.52
+| epoch 1 |  iter 41 / 351 | time 12[s] | loss 2.17
+| epoch 1 |  iter 61 / 351 | time 12[s] | loss 1.96
+| epoch 1 |  iter 81 / 351 | time 13[s] | loss 1.91
+| epoch 1 |  iter 101 / 351 | time 13[s] | loss 1.87
+| epoch 1 |  iter 121 / 351 | time 14[s] | loss 1.86
+| epoch 1 |  iter 141 / 351 | time 14[s] | loss 1.84
+| epoch 1 |  iter 161 / 351 | time 15[s] | loss 1.80
+| epoch 1 |  iter 181 / 351 | time 15[s] | loss 1.78
+| epoch 1 |  iter 201 / 351 | time 15[s] | loss 1.77
+| epoch 1 |  iter 221 / 351 | time 16[s] | loss 1.77
+| epoch 1 |  iter 241 / 351 | time 16[s] | loss 1.76
+| epoch 1 |  iter 261 / 351 | time 17[s] | loss 1.75
+| epoch 1 |  iter 281 / 351 | time 17[s] | loss 1.74
+| epoch 1 |  iter 301 / 351 | time 18[s] | loss 1.74
+| epoch 1 |  iter 321 / 351 | time 18[s] | loss 1.74
+| epoch 1 |  iter 341 / 351 | time 18[s] | loss 1.73
+Q   58+77
+T 162
+X 100
+---
+Q 461+579
+T 1139
+X 1000
+---
+Q  48+285
+T 666
+X 1001
+---
+Q   551+8
+T 163
+X 100
+---
+Q  55+763
+T 422
+X 1001
+---
+Q 752+006
+T 857
+X 1000
+---
+Q 292+167
+T 1053
+X 1000
+---
+Q 795+038
+T 1427
+X 1000
+---
+Q  838+62
+T 864
+X 1001
+---
+Q  39+341
+T 236
+X 703
+---
+val acc 0.120%
+| epoch 2 |  iter 1 / 351 | time 0[s] | loss 1.73
+| epoch 2 |  iter 21 / 351 | time 0[s] | loss 1.72
+| epoch 2 |  iter 41 / 351 | time 0[s] | loss 1.72
+| epoch 2 |  iter 61 / 351 | time 1[s] | loss 1.72
+| epoch 2 |  iter 81 / 351 | time 1[s] | loss 1.70
+| epoch 2 |  iter 101 / 351 | time 1[s] | loss 1.70
+| epoch 2 |  iter 121 / 351 | time 2[s] | loss 1.69
+| epoch 2 |  iter 141 / 351 | time 2[s] | loss 1.68
+| epoch 2 |  iter 161 / 351 | time 3[s] | loss 1.67
+| epoch 2 |  iter 181 / 351 | time 3[s] | loss 1.66
+| epoch 2 |  iter 201 / 351 | time 3[s] | loss 1.66
+| epoch 2 |  iter 221 / 351 | time 4[s] | loss 1.65
+| epoch 2 |  iter 241 / 351 | time 4[s] | loss 1.63
+| epoch 2 |  iter 261 / 351 | time 5[s] | loss 1.62
+| epoch 2 |  iter 281 / 351 | time 5[s] | loss 1.61
+| epoch 2 |  iter 301 / 351 | time 5[s] | loss 1.60
+| epoch 2 |  iter 321 / 351 | time 6[s] | loss 1.58
+| epoch 2 |  iter 341 / 351 | time 6[s] | loss 1.56
+Q   58+77
+T 162
+X 100
+---
+Q 461+579
+T 1139
+X 1000
+---
+Q  48+285
+T 666
+X 690
+---
+Q   551+8
+T 163
+X 1000
+---
+Q  55+763
+T 422
+X 470
+---
+Q 752+006
+T 857
+X 700
+---
+Q 292+167
+T 1053
+X 1000
+---
+Q 795+038
+T 1427
+X 1444
+---
+Q  838+62
+T 864
+X 700
+---
+Q  39+341
+T 236
+X 370
+---
+val acc 0.400%
+| epoch 3 |  iter 1 / 351 | time 0[s] | loss 1.52
+| epoch 3 |  iter 21 / 351 | time 0[s] | loss 1.53
+| epoch 3 |  iter 41 / 351 | time 0[s] | loss 1.51
+| epoch 3 |  iter 61 / 351 | time 1[s] | loss 1.49
+| epoch 3 |  iter 81 / 351 | time 1[s] | loss 1.47
+| epoch 3 |  iter 101 / 351 | time 1[s] | loss 1.45
+| epoch 3 |  iter 121 / 351 | time 2[s] | loss 1.44
+| epoch 3 |  iter 141 / 351 | time 2[s] | loss 1.42
+| epoch 3 |  iter 161 / 351 | time 3[s] | loss 1.40
+| epoch 3 |  iter 181 / 351 | time 3[s] | loss 1.38
+| epoch 3 |  iter 201 / 351 | time 3[s] | loss 1.37
+| epoch 3 |  iter 221 / 351 | time 4[s] | loss 1.35
+| epoch 3 |  iter 241 / 351 | time 4[s] | loss 1.33
+| epoch 3 |  iter 261 / 351 | time 5[s] | loss 1.32
+| epoch 3 |  iter 281 / 351 | time 5[s] | loss 1.30
+| epoch 3 |  iter 301 / 351 | time 5[s] | loss 1.29
+| epoch 3 |  iter 321 / 351 | time 6[s] | loss 1.28
+| epoch 3 |  iter 341 / 351 | time 6[s] | loss 1.27
+Q   58+77
+T 162
+X 158
+---
+Q 461+579
+T 1139
+X 1148
+---
+Q  48+285
+T 666
+X 662
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 382
+---
+Q 752+006
+T 857
+X 818
+---
+Q 292+167
+T 1053
+X 1008
+---
+Q 795+038
+T 1427
+X 1434
+---
+Q  838+62
+T 864
+X 838
+---
+Q  39+341
+T 236
+X 202
+---
+val acc 1.940%
+| epoch 4 |  iter 1 / 351 | time 0[s] | loss 1.26
+| epoch 4 |  iter 21 / 351 | time 0[s] | loss 1.25
+| epoch 4 |  iter 41 / 351 | time 0[s] | loss 1.23
+| epoch 4 |  iter 61 / 351 | time 1[s] | loss 1.22
+| epoch 4 |  iter 81 / 351 | time 1[s] | loss 1.20
+| epoch 4 |  iter 101 / 351 | time 1[s] | loss 1.19
+| epoch 4 |  iter 121 / 351 | time 2[s] | loss 1.18
+| epoch 4 |  iter 141 / 351 | time 2[s] | loss 1.17
+| epoch 4 |  iter 161 / 351 | time 3[s] | loss 1.15
+| epoch 4 |  iter 181 / 351 | time 3[s] | loss 1.13
+| epoch 4 |  iter 201 / 351 | time 3[s] | loss 1.12
+| epoch 4 |  iter 221 / 351 | time 4[s] | loss 1.11
+| epoch 4 |  iter 241 / 351 | time 4[s] | loss 1.09
+| epoch 4 |  iter 261 / 351 | time 5[s] | loss 1.08
+| epoch 4 |  iter 281 / 351 | time 5[s] | loss 1.07
+| epoch 4 |  iter 301 / 351 | time 5[s] | loss 1.07
+| epoch 4 |  iter 321 / 351 | time 6[s] | loss 1.05
+| epoch 4 |  iter 341 / 351 | time 6[s] | loss 1.03
+Q   58+77
+T 162
+X 166
+---
+Q 461+579
+T 1139
+X 1196
+---
+Q  48+285
+T 666
+X 668
+---
+Q   551+8
+T 163
+X 166
+---
+Q  55+763
+T 422
+X 419
+---
+Q 752+006
+T 857
+X 896
+---
+Q 292+167
+T 1053
+X 1010
+---
+Q 795+038
+T 1427
+X 1496
+---
+Q  838+62
+T 864
+X 868
+---
+Q  39+341
+T 236
+X 239
+---
+val acc 5.780%
+| epoch 5 |  iter 1 / 351 | time 0[s] | loss 1.01
+| epoch 5 |  iter 21 / 351 | time 0[s] | loss 1.01
+| epoch 5 |  iter 41 / 351 | time 0[s] | loss 1.00
+| epoch 5 |  iter 61 / 351 | time 1[s] | loss 0.99
+| epoch 5 |  iter 81 / 351 | time 1[s] | loss 0.97
+| epoch 5 |  iter 101 / 351 | time 1[s] | loss 0.95
+| epoch 5 |  iter 121 / 351 | time 2[s] | loss 0.95
+| epoch 5 |  iter 141 / 351 | time 2[s] | loss 0.94
+| epoch 5 |  iter 161 / 351 | time 3[s] | loss 0.93
+| epoch 5 |  iter 181 / 351 | time 3[s] | loss 0.93
+| epoch 5 |  iter 201 / 351 | time 4[s] | loss 0.91
+| epoch 5 |  iter 221 / 351 | time 4[s] | loss 0.89
+| epoch 5 |  iter 241 / 351 | time 4[s] | loss 0.89
+| epoch 5 |  iter 261 / 351 | time 5[s] | loss 0.88
+| epoch 5 |  iter 281 / 351 | time 5[s] | loss 0.87
+| epoch 5 |  iter 301 / 351 | time 6[s] | loss 0.86
+| epoch 5 |  iter 321 / 351 | time 6[s] | loss 0.85
+| epoch 5 |  iter 341 / 351 | time 6[s] | loss 0.84
+Q   58+77
+T 162
+X 161
+---
+Q 461+579
+T 1139
+X 1192
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 166
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+X 860
+---
+Q 292+167
+T 1053
+X 1066
+---
+Q 795+038
+T 1427
+X 1414
+---
+Q  838+62
+T 864
+X 865
+---
+Q  39+341
+T 236
+X 232
+---
+val acc 12.460%
+| epoch 6 |  iter 1 / 351 | time 0[s] | loss 0.86
+| epoch 6 |  iter 21 / 351 | time 0[s] | loss 0.82
+| epoch 6 |  iter 41 / 351 | time 0[s] | loss 0.82
+| epoch 6 |  iter 61 / 351 | time 1[s] | loss 0.81
+| epoch 6 |  iter 81 / 351 | time 1[s] | loss 0.80
+| epoch 6 |  iter 101 / 351 | time 2[s] | loss 0.80
+| epoch 6 |  iter 121 / 351 | time 2[s] | loss 0.79
+| epoch 6 |  iter 141 / 351 | time 2[s] | loss 0.78
+| epoch 6 |  iter 161 / 351 | time 3[s] | loss 0.77
+| epoch 6 |  iter 181 / 351 | time 3[s] | loss 0.77
+| epoch 6 |  iter 201 / 351 | time 4[s] | loss 0.78
+| epoch 6 |  iter 221 / 351 | time 4[s] | loss 0.76
+| epoch 6 |  iter 241 / 351 | time 4[s] | loss 0.75
+| epoch 6 |  iter 261 / 351 | time 5[s] | loss 0.74
+| epoch 6 |  iter 281 / 351 | time 5[s] | loss 0.73
+| epoch 6 |  iter 301 / 351 | time 6[s] | loss 0.73
+| epoch 6 |  iter 321 / 351 | time 6[s] | loss 0.72
+| epoch 6 |  iter 341 / 351 | time 7[s] | loss 0.72
+Q   58+77
+T 162
+X 161
+---
+Q 461+579
+T 1139
+X 1141
+---
+Q  48+285
+T 666
+X 661
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 851
+---
+Q 292+167
+T 1053
+X 1061
+---
+Q 795+038
+T 1427
+X 1391
+---
+Q  838+62
+T 864
+X 866
+---
+Q  39+341
+T 236
+X 234
+---
+val acc 14.260%
+| epoch 7 |  iter 1 / 351 | time 0[s] | loss 0.71
+| epoch 7 |  iter 21 / 351 | time 0[s] | loss 0.71
+| epoch 7 |  iter 41 / 351 | time 0[s] | loss 0.70
+| epoch 7 |  iter 61 / 351 | time 1[s] | loss 0.70
+| epoch 7 |  iter 81 / 351 | time 1[s] | loss 0.68
+| epoch 7 |  iter 101 / 351 | time 2[s] | loss 0.68
+| epoch 7 |  iter 121 / 351 | time 2[s] | loss 0.67
+| epoch 7 |  iter 141 / 351 | time 2[s] | loss 0.67
+| epoch 7 |  iter 161 / 351 | time 3[s] | loss 0.67
+| epoch 7 |  iter 181 / 351 | time 3[s] | loss 0.66
+| epoch 7 |  iter 201 / 351 | time 4[s] | loss 0.66
+| epoch 7 |  iter 221 / 351 | time 4[s] | loss 0.66
+| epoch 7 |  iter 241 / 351 | time 4[s] | loss 0.64
+| epoch 7 |  iter 261 / 351 | time 5[s] | loss 0.65
+| epoch 7 |  iter 281 / 351 | time 5[s] | loss 0.64
+| epoch 7 |  iter 301 / 351 | time 6[s] | loss 0.63
+| epoch 7 |  iter 321 / 351 | time 6[s] | loss 0.63
+| epoch 7 |  iter 341 / 351 | time 6[s] | loss 0.62
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1142
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 859
+---
+Q 292+167
+T 1053
+X 1144
+---
+Q 795+038
+T 1427
+X 1431
+---
+Q  838+62
+T 864
+X 866
+---
+Q  39+341
+T 236
+X 239
+---
+val acc 17.500%
+| epoch 8 |  iter 1 / 351 | time 0[s] | loss 0.66
+| epoch 8 |  iter 21 / 351 | time 0[s] | loss 0.61
+| epoch 8 |  iter 41 / 351 | time 0[s] | loss 0.62
+| epoch 8 |  iter 61 / 351 | time 1[s] | loss 0.61
+| epoch 8 |  iter 81 / 351 | time 1[s] | loss 0.61
+| epoch 8 |  iter 101 / 351 | time 2[s] | loss 0.61
+| epoch 8 |  iter 121 / 351 | time 2[s] | loss 0.60
+| epoch 8 |  iter 141 / 351 | time 2[s] | loss 0.60
+| epoch 8 |  iter 161 / 351 | time 3[s] | loss 0.59
+| epoch 8 |  iter 181 / 351 | time 3[s] | loss 0.58
+| epoch 8 |  iter 201 / 351 | time 4[s] | loss 0.59
+| epoch 8 |  iter 221 / 351 | time 4[s] | loss 0.60
+| epoch 8 |  iter 241 / 351 | time 4[s] | loss 0.59
+| epoch 8 |  iter 261 / 351 | time 5[s] | loss 0.58
+| epoch 8 |  iter 281 / 351 | time 5[s] | loss 0.59
+| epoch 8 |  iter 301 / 351 | time 6[s] | loss 0.58
+| epoch 8 |  iter 321 / 351 | time 6[s] | loss 0.57
+| epoch 8 |  iter 341 / 351 | time 6[s] | loss 0.57
+Q   58+77
+T 162
+X 163
+---
+Q 461+579
+T 1139
+X 1134
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 423
+---
+Q 752+006
+T 857
+X 759
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1431
+---
+Q  838+62
+T 864
+X 866
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 23.080%
+| epoch 9 |  iter 1 / 351 | time 0[s] | loss 0.55
+| epoch 9 |  iter 21 / 351 | time 0[s] | loss 0.56
+| epoch 9 |  iter 41 / 351 | time 0[s] | loss 0.56
+| epoch 9 |  iter 61 / 351 | time 1[s] | loss 0.55
+| epoch 9 |  iter 81 / 351 | time 1[s] | loss 0.54
+| epoch 9 |  iter 101 / 351 | time 2[s] | loss 0.55
+| epoch 9 |  iter 121 / 351 | time 2[s] | loss 0.55
+| epoch 9 |  iter 141 / 351 | time 2[s] | loss 0.54
+| epoch 9 |  iter 161 / 351 | time 3[s] | loss 0.55
+| epoch 9 |  iter 181 / 351 | time 3[s] | loss 0.53
+| epoch 9 |  iter 201 / 351 | time 4[s] | loss 0.54
+| epoch 9 |  iter 221 / 351 | time 4[s] | loss 0.54
+| epoch 9 |  iter 241 / 351 | time 4[s] | loss 0.53
+| epoch 9 |  iter 261 / 351 | time 5[s] | loss 0.53
+| epoch 9 |  iter 281 / 351 | time 5[s] | loss 0.54
+| epoch 9 |  iter 301 / 351 | time 6[s] | loss 0.54
+| epoch 9 |  iter 321 / 351 | time 6[s] | loss 0.53
+| epoch 9 |  iter 341 / 351 | time 7[s] | loss 0.53
+Q   58+77
+T 162
+X 158
+---
+Q 461+579
+T 1139
+X 1142
+---
+Q  48+285
+T 666
+X 664
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 854
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1428
+---
+Q  838+62
+T 864
+X 862
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 26.540%
+| epoch 10 |  iter 1 / 351 | time 0[s] | loss 0.50
+| epoch 10 |  iter 21 / 351 | time 0[s] | loss 0.51
+| epoch 10 |  iter 41 / 351 | time 0[s] | loss 0.52
+| epoch 10 |  iter 61 / 351 | time 1[s] | loss 0.55
+| epoch 10 |  iter 81 / 351 | time 1[s] | loss 0.52
+| epoch 10 |  iter 101 / 351 | time 2[s] | loss 0.51
+| epoch 10 |  iter 121 / 351 | time 2[s] | loss 0.50
+| epoch 10 |  iter 141 / 351 | time 2[s] | loss 0.51
+| epoch 10 |  iter 161 / 351 | time 3[s] | loss 0.52
+| epoch 10 |  iter 181 / 351 | time 3[s] | loss 0.53
+| epoch 10 |  iter 201 / 351 | time 4[s] | loss 0.50
+| epoch 10 |  iter 221 / 351 | time 4[s] | loss 0.50
+| epoch 10 |  iter 241 / 351 | time 5[s] | loss 0.50
+| epoch 10 |  iter 261 / 351 | time 5[s] | loss 0.50
+| epoch 10 |  iter 281 / 351 | time 5[s] | loss 0.49
+| epoch 10 |  iter 301 / 351 | time 6[s] | loss 0.48
+| epoch 10 |  iter 321 / 351 | time 6[s] | loss 0.48
+| epoch 10 |  iter 341 / 351 | time 7[s] | loss 0.48
+Q   58+77
+T 162
+X 163
+---
+Q 461+579
+T 1139
+O 1139
+---
+Q  48+285
+T 666
+X 664
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+X 859
+---
+Q 292+167
+T 1053
+X 1054
+---
+Q 795+038
+T 1427
+X 1431
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 235
+---
+val acc 29.820%
+| epoch 11 |  iter 1 / 351 | time 0[s] | loss 0.47
+| epoch 11 |  iter 21 / 351 | time 0[s] | loss 0.48
+| epoch 11 |  iter 41 / 351 | time 0[s] | loss 0.48
+| epoch 11 |  iter 61 / 351 | time 1[s] | loss 0.48
+| epoch 11 |  iter 81 / 351 | time 1[s] | loss 0.47
+| epoch 11 |  iter 101 / 351 | time 2[s] | loss 0.47
+| epoch 11 |  iter 121 / 351 | time 2[s] | loss 0.47
+| epoch 11 |  iter 141 / 351 | time 2[s] | loss 0.47
+| epoch 11 |  iter 161 / 351 | time 3[s] | loss 0.48
+| epoch 11 |  iter 181 / 351 | time 3[s] | loss 0.48
+| epoch 11 |  iter 201 / 351 | time 4[s] | loss 0.47
+| epoch 11 |  iter 221 / 351 | time 4[s] | loss 0.47
+| epoch 11 |  iter 241 / 351 | time 4[s] | loss 0.46
+| epoch 11 |  iter 261 / 351 | time 5[s] | loss 0.46
+| epoch 11 |  iter 281 / 351 | time 5[s] | loss 0.46
+| epoch 11 |  iter 301 / 351 | time 6[s] | loss 0.48
+| epoch 11 |  iter 321 / 351 | time 6[s] | loss 0.45
+| epoch 11 |  iter 341 / 351 | time 6[s] | loss 0.45
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1140
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+X 859
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1426
+---
+Q  838+62
+T 864
+X 866
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 28.500%
+| epoch 12 |  iter 1 / 351 | time 0[s] | loss 0.46
+| epoch 12 |  iter 21 / 351 | time 0[s] | loss 0.45
+| epoch 12 |  iter 41 / 351 | time 0[s] | loss 0.45
+| epoch 12 |  iter 61 / 351 | time 1[s] | loss 0.46
+| epoch 12 |  iter 81 / 351 | time 1[s] | loss 0.45
+| epoch 12 |  iter 101 / 351 | time 2[s] | loss 0.46
+| epoch 12 |  iter 121 / 351 | time 2[s] | loss 0.46
+| epoch 12 |  iter 141 / 351 | time 2[s] | loss 0.46
+| epoch 12 |  iter 161 / 351 | time 3[s] | loss 0.45
+| epoch 12 |  iter 181 / 351 | time 3[s] | loss 0.44
+| epoch 12 |  iter 201 / 351 | time 4[s] | loss 0.45
+| epoch 12 |  iter 221 / 351 | time 4[s] | loss 0.44
+| epoch 12 |  iter 241 / 351 | time 4[s] | loss 0.43
+| epoch 12 |  iter 261 / 351 | time 5[s] | loss 0.43
+| epoch 12 |  iter 281 / 351 | time 5[s] | loss 0.44
+| epoch 12 |  iter 301 / 351 | time 6[s] | loss 0.45
+| epoch 12 |  iter 321 / 351 | time 6[s] | loss 0.44
+| epoch 12 |  iter 341 / 351 | time 7[s] | loss 0.43
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+O 1139
+---
+Q  48+285
+T 666
+X 667
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+O 857
+---
+Q 292+167
+T 1053
+X 1051
+---
+Q 795+038
+T 1427
+X 1428
+---
+Q  838+62
+T 864
+X 862
+---
+Q  39+341
+T 236
+X 237
+---
+val acc 36.640%
+| epoch 13 |  iter 1 / 351 | time 0[s] | loss 0.41
+| epoch 13 |  iter 21 / 351 | time 0[s] | loss 0.43
+| epoch 13 |  iter 41 / 351 | time 0[s] | loss 0.42
+| epoch 13 |  iter 61 / 351 | time 1[s] | loss 0.42
+| epoch 13 |  iter 81 / 351 | time 1[s] | loss 0.42
+| epoch 13 |  iter 101 / 351 | time 2[s] | loss 0.44
+| epoch 13 |  iter 121 / 351 | time 2[s] | loss 0.43
+| epoch 13 |  iter 141 / 351 | time 2[s] | loss 0.41
+| epoch 13 |  iter 161 / 351 | time 3[s] | loss 0.42
+| epoch 13 |  iter 181 / 351 | time 3[s] | loss 0.42
+| epoch 13 |  iter 201 / 351 | time 4[s] | loss 0.42
+| epoch 13 |  iter 221 / 351 | time 4[s] | loss 0.43
+| epoch 13 |  iter 241 / 351 | time 4[s] | loss 0.43
+| epoch 13 |  iter 261 / 351 | time 5[s] | loss 0.41
+| epoch 13 |  iter 281 / 351 | time 5[s] | loss 0.42
+| epoch 13 |  iter 301 / 351 | time 6[s] | loss 0.41
+| epoch 13 |  iter 321 / 351 | time 6[s] | loss 0.43
+| epoch 13 |  iter 341 / 351 | time 7[s] | loss 0.40
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1140
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 424
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+X 1054
+---
+Q 795+038
+T 1427
+X 1429
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 239
+---
+val acc 39.420%
+| epoch 14 |  iter 1 / 351 | time 0[s] | loss 0.41
+| epoch 14 |  iter 21 / 351 | time 0[s] | loss 0.41
+| epoch 14 |  iter 41 / 351 | time 0[s] | loss 0.41
+| epoch 14 |  iter 61 / 351 | time 1[s] | loss 0.40
+| epoch 14 |  iter 81 / 351 | time 1[s] | loss 0.40
+| epoch 14 |  iter 101 / 351 | time 2[s] | loss 0.41
+| epoch 14 |  iter 121 / 351 | time 2[s] | loss 0.39
+| epoch 14 |  iter 141 / 351 | time 2[s] | loss 0.39
+| epoch 14 |  iter 161 / 351 | time 3[s] | loss 0.38
+| epoch 14 |  iter 181 / 351 | time 3[s] | loss 0.38
+| epoch 14 |  iter 201 / 351 | time 3[s] | loss 0.38
+| epoch 14 |  iter 221 / 351 | time 4[s] | loss 0.38
+| epoch 14 |  iter 241 / 351 | time 4[s] | loss 0.39
+| epoch 14 |  iter 261 / 351 | time 4[s] | loss 0.40
+| epoch 14 |  iter 281 / 351 | time 5[s] | loss 0.41
+| epoch 14 |  iter 301 / 351 | time 5[s] | loss 0.39
+| epoch 14 |  iter 321 / 351 | time 6[s] | loss 0.39
+| epoch 14 |  iter 341 / 351 | time 6[s] | loss 0.39
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1137
+---
+Q  48+285
+T 666
+X 667
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 858
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1426
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 235
+---
+val acc 36.640%
+| epoch 15 |  iter 1 / 351 | time 0[s] | loss 0.38
+| epoch 15 |  iter 21 / 351 | time 0[s] | loss 0.39
+| epoch 15 |  iter 41 / 351 | time 0[s] | loss 0.39
+| epoch 15 |  iter 61 / 351 | time 1[s] | loss 0.38
+| epoch 15 |  iter 81 / 351 | time 1[s] | loss 0.38
+| epoch 15 |  iter 101 / 351 | time 1[s] | loss 0.38
+| epoch 15 |  iter 121 / 351 | time 2[s] | loss 0.38
+| epoch 15 |  iter 141 / 351 | time 2[s] | loss 0.38
+| epoch 15 |  iter 161 / 351 | time 3[s] | loss 0.38
+| epoch 15 |  iter 181 / 351 | time 3[s] | loss 0.38
+| epoch 15 |  iter 201 / 351 | time 3[s] | loss 0.38
+| epoch 15 |  iter 221 / 351 | time 4[s] | loss 0.39
+| epoch 15 |  iter 241 / 351 | time 4[s] | loss 0.38
+| epoch 15 |  iter 261 / 351 | time 5[s] | loss 0.37
+| epoch 15 |  iter 281 / 351 | time 5[s] | loss 0.37
+| epoch 15 |  iter 301 / 351 | time 5[s] | loss 0.39
+| epoch 15 |  iter 321 / 351 | time 6[s] | loss 0.39
+| epoch 15 |  iter 341 / 351 | time 6[s] | loss 0.37
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1137
+---
+Q  48+285
+T 666
+X 667
+---
+Q   551+8
+T 163
+X 164
+---
+Q  55+763
+T 422
+X 420
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+X 1052
+---
+Q 795+038
+T 1427
+X 1431
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 237
+---
+val acc 41.100%
+| epoch 16 |  iter 1 / 351 | time 0[s] | loss 0.36
+| epoch 16 |  iter 21 / 351 | time 0[s] | loss 0.36
+| epoch 16 |  iter 41 / 351 | time 0[s] | loss 0.36
+| epoch 16 |  iter 61 / 351 | time 1[s] | loss 0.36
+| epoch 16 |  iter 81 / 351 | time 1[s] | loss 0.37
+| epoch 16 |  iter 101 / 351 | time 1[s] | loss 0.36
+| epoch 16 |  iter 121 / 351 | time 2[s] | loss 0.37
+| epoch 16 |  iter 141 / 351 | time 2[s] | loss 0.36
+| epoch 16 |  iter 161 / 351 | time 3[s] | loss 0.37
+| epoch 16 |  iter 181 / 351 | time 3[s] | loss 0.36
+| epoch 16 |  iter 201 / 351 | time 3[s] | loss 0.38
+| epoch 16 |  iter 221 / 351 | time 4[s] | loss 0.38
+| epoch 16 |  iter 241 / 351 | time 4[s] | loss 0.36
+| epoch 16 |  iter 261 / 351 | time 4[s] | loss 0.35
+| epoch 16 |  iter 281 / 351 | time 5[s] | loss 0.35
+| epoch 16 |  iter 301 / 351 | time 5[s] | loss 0.35
+| epoch 16 |  iter 321 / 351 | time 6[s] | loss 0.35
+| epoch 16 |  iter 341 / 351 | time 6[s] | loss 0.37
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1142
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 858
+---
+Q 292+167
+T 1053
+X 1054
+---
+Q 795+038
+T 1427
+X 1430
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 237
+---
+val acc 42.700%
+| epoch 17 |  iter 1 / 351 | time 0[s] | loss 0.34
+| epoch 17 |  iter 21 / 351 | time 0[s] | loss 0.36
+| epoch 17 |  iter 41 / 351 | time 0[s] | loss 0.36
+| epoch 17 |  iter 61 / 351 | time 1[s] | loss 0.35
+| epoch 17 |  iter 81 / 351 | time 1[s] | loss 0.36
+| epoch 17 |  iter 101 / 351 | time 1[s] | loss 0.34
+| epoch 17 |  iter 121 / 351 | time 2[s] | loss 0.34
+| epoch 17 |  iter 141 / 351 | time 2[s] | loss 0.34
+| epoch 17 |  iter 161 / 351 | time 2[s] | loss 0.34
+| epoch 17 |  iter 181 / 351 | time 3[s] | loss 0.35
+| epoch 17 |  iter 201 / 351 | time 3[s] | loss 0.35
+| epoch 17 |  iter 221 / 351 | time 4[s] | loss 0.34
+| epoch 17 |  iter 241 / 351 | time 4[s] | loss 0.35
+| epoch 17 |  iter 261 / 351 | time 4[s] | loss 0.36
+| epoch 17 |  iter 281 / 351 | time 5[s] | loss 0.37
+| epoch 17 |  iter 301 / 351 | time 5[s] | loss 0.37
+| epoch 17 |  iter 321 / 351 | time 6[s] | loss 0.37
+| epoch 17 |  iter 341 / 351 | time 6[s] | loss 0.36
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1138
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+X 1051
+---
+Q 795+038
+T 1427
+X 1429
+---
+Q  838+62
+T 864
+X 865
+---
+Q  39+341
+T 236
+O 236
+---
+val acc 42.860%
+| epoch 18 |  iter 1 / 351 | time 0[s] | loss 0.34
+| epoch 18 |  iter 21 / 351 | time 0[s] | loss 0.36
+| epoch 18 |  iter 41 / 351 | time 0[s] | loss 0.35
+| epoch 18 |  iter 61 / 351 | time 1[s] | loss 0.35
+| epoch 18 |  iter 81 / 351 | time 1[s] | loss 0.34
+| epoch 18 |  iter 101 / 351 | time 1[s] | loss 0.34
+| epoch 18 |  iter 121 / 351 | time 2[s] | loss 0.33
+| epoch 18 |  iter 141 / 351 | time 2[s] | loss 0.33
+| epoch 18 |  iter 161 / 351 | time 3[s] | loss 0.34
+| epoch 18 |  iter 181 / 351 | time 3[s] | loss 0.33
+| epoch 18 |  iter 201 / 351 | time 3[s] | loss 0.33
+| epoch 18 |  iter 221 / 351 | time 4[s] | loss 0.33
+| epoch 18 |  iter 241 / 351 | time 4[s] | loss 0.33
+| epoch 18 |  iter 261 / 351 | time 4[s] | loss 0.33
+| epoch 18 |  iter 281 / 351 | time 5[s] | loss 0.33
+| epoch 18 |  iter 301 / 351 | time 5[s] | loss 0.33
+| epoch 18 |  iter 321 / 351 | time 6[s] | loss 0.35
+| epoch 18 |  iter 341 / 351 | time 6[s] | loss 0.35
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1138
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 423
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+X 1052
+---
+Q 795+038
+T 1427
+X 1425
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 237
+---
+val acc 40.640%
+| epoch 19 |  iter 1 / 351 | time 0[s] | loss 0.34
+| epoch 19 |  iter 21 / 351 | time 0[s] | loss 0.34
+| epoch 19 |  iter 41 / 351 | time 0[s] | loss 0.34
+| epoch 19 |  iter 61 / 351 | time 1[s] | loss 0.34
+| epoch 19 |  iter 81 / 351 | time 1[s] | loss 0.34
+| epoch 19 |  iter 101 / 351 | time 1[s] | loss 0.32
+| epoch 19 |  iter 121 / 351 | time 2[s] | loss 0.31
+| epoch 19 |  iter 141 / 351 | time 2[s] | loss 0.33
+| epoch 19 |  iter 161 / 351 | time 3[s] | loss 0.31
+| epoch 19 |  iter 181 / 351 | time 3[s] | loss 0.30
+| epoch 19 |  iter 201 / 351 | time 3[s] | loss 0.31
+| epoch 19 |  iter 221 / 351 | time 4[s] | loss 0.31
+| epoch 19 |  iter 241 / 351 | time 4[s] | loss 0.32
+| epoch 19 |  iter 261 / 351 | time 4[s] | loss 0.33
+| epoch 19 |  iter 281 / 351 | time 5[s] | loss 0.32
+| epoch 19 |  iter 301 / 351 | time 5[s] | loss 0.32
+| epoch 19 |  iter 321 / 351 | time 6[s] | loss 0.33
+| epoch 19 |  iter 341 / 351 | time 6[s] | loss 0.33
+Q   58+77
+T 162
+X 161
+---
+Q 461+579
+T 1139
+X 1140
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 858
+---
+Q 292+167
+T 1053
+X 1052
+---
+Q 795+038
+T 1427
+X 1430
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 47.540%
+| epoch 20 |  iter 1 / 351 | time 0[s] | loss 0.32
+| epoch 20 |  iter 21 / 351 | time 0[s] | loss 0.35
+| epoch 20 |  iter 41 / 351 | time 0[s] | loss 0.33
+| epoch 20 |  iter 61 / 351 | time 1[s] | loss 0.33
+| epoch 20 |  iter 81 / 351 | time 1[s] | loss 0.31
+| epoch 20 |  iter 101 / 351 | time 1[s] | loss 0.31
+| epoch 20 |  iter 121 / 351 | time 2[s] | loss 0.33
+| epoch 20 |  iter 141 / 351 | time 2[s] | loss 0.32
+| epoch 20 |  iter 161 / 351 | time 3[s] | loss 0.33
+| epoch 20 |  iter 181 / 351 | time 3[s] | loss 0.31
+| epoch 20 |  iter 201 / 351 | time 3[s] | loss 0.30
+| epoch 20 |  iter 221 / 351 | time 4[s] | loss 0.32
+| epoch 20 |  iter 241 / 351 | time 4[s] | loss 0.33
+| epoch 20 |  iter 261 / 351 | time 4[s] | loss 0.35
+| epoch 20 |  iter 281 / 351 | time 5[s] | loss 0.36
+| epoch 20 |  iter 301 / 351 | time 5[s] | loss 0.34
+| epoch 20 |  iter 321 / 351 | time 6[s] | loss 0.32
+| epoch 20 |  iter 341 / 351 | time 6[s] | loss 0.32
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+O 1139
+---
+Q  48+285
+T 666
+X 665
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+X 859
+---
+Q 292+167
+T 1053
+X 1051
+---
+Q 795+038
+T 1427
+O 1427
+---
+Q  838+62
+T 864
+X 862
+---
+Q  39+341
+T 236
+O 236
+---
+val acc 49.960%
+| epoch 21 |  iter 1 / 351 | time 0[s] | loss 0.31
+| epoch 21 |  iter 21 / 351 | time 0[s] | loss 0.31
+| epoch 21 |  iter 41 / 351 | time 0[s] | loss 0.30
+| epoch 21 |  iter 61 / 351 | time 1[s] | loss 0.30
+| epoch 21 |  iter 81 / 351 | time 1[s] | loss 0.32
+| epoch 21 |  iter 101 / 351 | time 1[s] | loss 0.32
+| epoch 21 |  iter 121 / 351 | time 2[s] | loss 0.31
+| epoch 21 |  iter 141 / 351 | time 2[s] | loss 0.30
+| epoch 21 |  iter 161 / 351 | time 3[s] | loss 0.31
+| epoch 21 |  iter 181 / 351 | time 3[s] | loss 0.31
+| epoch 21 |  iter 201 / 351 | time 3[s] | loss 0.31
+| epoch 21 |  iter 221 / 351 | time 4[s] | loss 0.32
+| epoch 21 |  iter 241 / 351 | time 4[s] | loss 0.31
+| epoch 21 |  iter 261 / 351 | time 4[s] | loss 0.29
+| epoch 21 |  iter 281 / 351 | time 5[s] | loss 0.30
+| epoch 21 |  iter 301 / 351 | time 5[s] | loss 0.29
+| epoch 21 |  iter 321 / 351 | time 6[s] | loss 0.29
+| epoch 21 |  iter 341 / 351 | time 6[s] | loss 0.29
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+O 1139
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+X 162
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+X 859
+---
+Q 292+167
+T 1053
+X 1052
+---
+Q 795+038
+T 1427
+X 1428
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+O 236
+---
+val acc 51.000%
+| epoch 22 |  iter 1 / 351 | time 0[s] | loss 0.32
+| epoch 22 |  iter 21 / 351 | time 0[s] | loss 0.29
+| epoch 22 |  iter 41 / 351 | time 0[s] | loss 0.28
+| epoch 22 |  iter 61 / 351 | time 1[s] | loss 0.29
+| epoch 22 |  iter 81 / 351 | time 1[s] | loss 0.29
+| epoch 22 |  iter 101 / 351 | time 2[s] | loss 0.28
+| epoch 22 |  iter 121 / 351 | time 2[s] | loss 0.29
+| epoch 22 |  iter 141 / 351 | time 2[s] | loss 0.31
+| epoch 22 |  iter 161 / 351 | time 3[s] | loss 0.31
+| epoch 22 |  iter 181 / 351 | time 3[s] | loss 0.30
+| epoch 22 |  iter 201 / 351 | time 4[s] | loss 0.28
+| epoch 22 |  iter 221 / 351 | time 4[s] | loss 0.32
+| epoch 22 |  iter 241 / 351 | time 4[s] | loss 0.33
+| epoch 22 |  iter 261 / 351 | time 5[s] | loss 0.32
+| epoch 22 |  iter 281 / 351 | time 5[s] | loss 0.31
+| epoch 22 |  iter 301 / 351 | time 5[s] | loss 0.30
+| epoch 22 |  iter 321 / 351 | time 6[s] | loss 0.29
+| epoch 22 |  iter 341 / 351 | time 6[s] | loss 0.31
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+O 1139
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+X 423
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1430
+---
+Q  838+62
+T 864
+X 865
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 47.740%
+| epoch 23 |  iter 1 / 351 | time 0[s] | loss 0.31
+| epoch 23 |  iter 21 / 351 | time 0[s] | loss 0.31
+| epoch 23 |  iter 41 / 351 | time 0[s] | loss 0.28
+| epoch 23 |  iter 61 / 351 | time 1[s] | loss 0.28
+| epoch 23 |  iter 81 / 351 | time 1[s] | loss 0.29
+| epoch 23 |  iter 101 / 351 | time 1[s] | loss 0.27
+| epoch 23 |  iter 121 / 351 | time 2[s] | loss 0.28
+| epoch 23 |  iter 141 / 351 | time 2[s] | loss 0.28
+| epoch 23 |  iter 161 / 351 | time 3[s] | loss 0.30
+| epoch 23 |  iter 181 / 351 | time 3[s] | loss 0.30
+| epoch 23 |  iter 201 / 351 | time 3[s] | loss 0.29
+| epoch 23 |  iter 221 / 351 | time 4[s] | loss 0.29
+| epoch 23 |  iter 241 / 351 | time 4[s] | loss 0.28
+| epoch 23 |  iter 261 / 351 | time 5[s] | loss 0.28
+| epoch 23 |  iter 281 / 351 | time 5[s] | loss 0.30
+| epoch 23 |  iter 301 / 351 | time 5[s] | loss 0.29
+| epoch 23 |  iter 321 / 351 | time 6[s] | loss 0.29
+| epoch 23 |  iter 341 / 351 | time 6[s] | loss 0.28
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1142
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 858
+---
+Q 292+167
+T 1053
+O 1053
+---
+Q 795+038
+T 1427
+X 1429
+---
+Q  838+62
+T 864
+X 866
+---
+Q  39+341
+T 236
+X 238
+---
+val acc 45.200%
+| epoch 24 |  iter 1 / 351 | time 0[s] | loss 0.31
+| epoch 24 |  iter 21 / 351 | time 0[s] | loss 0.29
+| epoch 24 |  iter 41 / 351 | time 0[s] | loss 0.28
+| epoch 24 |  iter 61 / 351 | time 1[s] | loss 0.29
+| epoch 24 |  iter 81 / 351 | time 1[s] | loss 0.30
+| epoch 24 |  iter 101 / 351 | time 1[s] | loss 0.29
+| epoch 24 |  iter 121 / 351 | time 2[s] | loss 0.29
+| epoch 24 |  iter 141 / 351 | time 2[s] | loss 0.29
+| epoch 24 |  iter 161 / 351 | time 3[s] | loss 0.28
+| epoch 24 |  iter 181 / 351 | time 3[s] | loss 0.29
+| epoch 24 |  iter 201 / 351 | time 3[s] | loss 0.28
+| epoch 24 |  iter 221 / 351 | time 4[s] | loss 0.28
+| epoch 24 |  iter 241 / 351 | time 4[s] | loss 0.29
+| epoch 24 |  iter 261 / 351 | time 5[s] | loss 0.29
+| epoch 24 |  iter 281 / 351 | time 5[s] | loss 0.29
+| epoch 24 |  iter 301 / 351 | time 5[s] | loss 0.28
+| epoch 24 |  iter 321 / 351 | time 6[s] | loss 0.27
+| epoch 24 |  iter 341 / 351 | time 6[s] | loss 0.29
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1140
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+X 421
+---
+Q 752+006
+T 857
+O 857
+---
+Q 292+167
+T 1053
+X 1054
+---
+Q 795+038
+T 1427
+X 1428
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+X 237
+---
+val acc 51.760%
+| epoch 25 |  iter 1 / 351 | time 0[s] | loss 0.29
+| epoch 25 |  iter 21 / 351 | time 0[s] | loss 0.29
+| epoch 25 |  iter 41 / 351 | time 0[s] | loss 0.28
+| epoch 25 |  iter 61 / 351 | time 1[s] | loss 0.26
+| epoch 25 |  iter 81 / 351 | time 1[s] | loss 0.26
+| epoch 25 |  iter 101 / 351 | time 1[s] | loss 0.27
+| epoch 25 |  iter 121 / 351 | time 2[s] | loss 0.29
+| epoch 25 |  iter 141 / 351 | time 2[s] | loss 0.28
+| epoch 25 |  iter 161 / 351 | time 3[s] | loss 0.28
+| epoch 25 |  iter 181 / 351 | time 3[s] | loss 0.28
+| epoch 25 |  iter 201 / 351 | time 3[s] | loss 0.27
+| epoch 25 |  iter 221 / 351 | time 4[s] | loss 0.29
+| epoch 25 |  iter 241 / 351 | time 4[s] | loss 0.27
+| epoch 25 |  iter 261 / 351 | time 4[s] | loss 0.28
+| epoch 25 |  iter 281 / 351 | time 5[s] | loss 0.28
+| epoch 25 |  iter 301 / 351 | time 5[s] | loss 0.27
+| epoch 25 |  iter 321 / 351 | time 6[s] | loss 0.28
+| epoch 25 |  iter 341 / 351 | time 6[s] | loss 0.28
+Q   58+77
+T 162
+O 162
+---
+Q 461+579
+T 1139
+X 1140
+---
+Q  48+285
+T 666
+O 666
+---
+Q   551+8
+T 163
+O 163
+---
+Q  55+763
+T 422
+O 422
+---
+Q 752+006
+T 857
+X 856
+---
+Q 292+167
+T 1053
+X 1052
+---
+Q 795+038
+T 1427
+X 1426
+---
+Q  838+62
+T 864
+O 864
+---
+Q  39+341
+T 236
+O 236
+---
+val acc 54.080%
+
+Process finished with exit code 0

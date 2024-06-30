@@ -11,6 +11,8 @@ import numpy as np
 我们将“加法”视为一个时序转换问题：
 在 seq2seq 学习后，如果输入字符串“57+5”，seq2seq 要能正确回答“62”。
 这种为了评价机器学习而创建的简单问题，称为“toy problem”。
+
+该网络与原先相比，解码器增加了偷窥（peeky）功能。
 '''
 
 # ============================= 公用函数 =============================
@@ -399,23 +401,25 @@ class Encoder:
         return dout
 
 '''
-Decoder 的构成如下：
+Peeky Decoder 的构成如下：
 字符向量 xs --> Time Embedding --> Time LSTM --> Time Affine --> 不属于Decoder范围 (Time softmax with Loss --> 损失)
-                                    ^
-                                    |
-                                    ---- h （Encoder 输出的隐藏状态）
+                                    ^               ^
+                                    |               |
+                                    ---- h （Encoder 输出的隐藏状态 h 给所有的 LSTM 层和 Affine 层）
+【！】注意与原 Decoder 结构的不同：原 Decoder 仅将隐藏状态 h 传给第一个 LSTM 层，
+而 Peeky Decoder 将隐藏状态 h 传给所有的 LSTM 层和 Affine 层。
 '''
-class Decoder:
+class PeekyDecoder:
     def __init__(self, vocab_size, wordvec_size, hidden_size):
         # 小批量样本个数，向量维数，隐藏层维数
         V, D, H = vocab_size, wordvec_size, hidden_size
 
         # 初始化权重
         embed_W = (np.random.randn(V, D) / 100).astype('f')  # 正态分布初始值
-        lstm_Wx = (np.random.randn(D, 4 * H) / np.sqrt(D)).astype('f')  # Xaiver 初始值
+        lstm_Wx = (np.random.randn(H + D, 4 * H) / np.sqrt(H + D)).astype('f')  # Xaiver 初始值
         lstm_Wh = (np.random.randn(H, 4 * H) / np.sqrt(H)).astype('f')  # Xaiver 初始值
         lstm_b = np.zeros(4 * H).astype('f')
-        affine_W = (np.random.randn(H, V) / np.sqrt(H)).astype('f')  # Xaiver 初始值
+        affine_W = (np.random.randn(H + H, V) / np.sqrt(H + H)).astype('f')  # Xaiver 初始值
         affine_b = np.zeros(V).astype('f')
 
         self.embed = TimeEmbedding(embed_W)
@@ -427,19 +431,34 @@ class Decoder:
             self.params += layer.params
             self.grads += layer.grads
 
+        self.cache = None
+
     def forward(self, xs, h):
+        N, T = xs.shape
+        N, H = h.shape
+
         self.lstm.set_state(h)
 
         out = self.embed.forward(xs)
+        hs = np.repeat(h, T, axis=0).reshape(N, T, H) # 将隐藏状态 h 复制 T 份
+        out = np.concatenate((hs, out), axis=2) # 将 hs 和 Embedding 层的输出拼接起来
         out = self.lstm.forward(out)
+        out = np.concatenate((hs, out), axis=2)  # 将 hs 和 LSTM 层的输出拼接起来
         score = self.affine.forward(out)
+
+        self.cache = H
         return score
 
     def backward(self, dscore):
+        H = self.cache
         dout = self.affine.backward(dscore)
+        dout, dhs0 = dout[:, :, H:], dout[:, :, :H]
         dout = self.lstm.backward(dout)
+        dout, dhs1 = dout[:, :, H:], dout[:, :, :H]
         dout = self.embed.backward(dout)
-        dh = self.lstm.dh
+
+        dhs = dhs0 + dhs1
+        dh = self.lstm.dh + np.sum(dhs, axis=1)
         return dh
 
     # 生成字符
@@ -449,10 +468,14 @@ class Decoder:
         sample_id = start_id # 存放正在被采样的字符 ID
         self.lstm.set_state(h)
 
+        H = h.shape[1]
+        peeky_h = h.reshape(1, 1, H)
         for _ in range(sample_size):
             x = np.array(sample_id).reshape(1, 1)  # 由于网络的输入必须为矩阵，所以要预先将 sample_id 转化为矩阵形式
             out = self.embed.forward(x)
+            out = np.concatenate((peeky_h, out), axis=2)
             out = self.lstm.forward(out)
+            out = np.concatenate((peeky_h, out), axis=2)
             score = self.affine.forward(out)
 
             sample_id = np.argmax(score.flatten()) # 选取得分最高的字符 ID
@@ -468,12 +491,12 @@ seq2seq 的构成如下：
                             V            V
 xs --> Encoder --> h --> Decoder --> Time softmax with Loss --> 损失
 '''
-class Seq2seq:
+class PeekySeq2seq:
     def __init__(self, vocab_size, wordvec_size, hidden_size):
         # 小批量样本个数，向量维数，隐藏层维数
         V, D, H = vocab_size, wordvec_size, hidden_size
         self.encoder = Encoder(V, D, H)
-        self.decoder = Decoder(V, D, H)
+        self.decoder = PeekyDecoder(V, D, H)
         self.softmax = TimeSoftmaxWithLoss()
 
         self.params = self.encoder.params + self.decoder.params
@@ -556,7 +579,7 @@ if __name__ == '__main__':
     max_grad = 5.0 # 用于梯度裁剪
 
     # 生成模型
-    model = Seq2seq(vocab_size, wordvec_size, hidden_size)
+    model = PeekySeq2seq(vocab_size, wordvec_size, hidden_size)
     optimizer = Adam()
     trainer = Trainer(model, optimizer)
 
