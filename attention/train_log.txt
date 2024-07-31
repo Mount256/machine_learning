@@ -1,0 +1,593 @@
+D:\ProgramData\Anaconda3\envs\myenvs\python.exe E:/machine_learning/attention/attention_seq2seq.py
+| epoch 1 |  iter 1 / 351 | time 0[s] | loss 4.08
+| epoch 1 |  iter 21 / 351 | time 9[s] | loss 3.09
+| epoch 1 |  iter 41 / 351 | time 18[s] | loss 1.90
+| epoch 1 |  iter 61 / 351 | time 28[s] | loss 1.72
+| epoch 1 |  iter 81 / 351 | time 37[s] | loss 1.46
+| epoch 1 |  iter 101 / 351 | time 46[s] | loss 1.19
+| epoch 1 |  iter 121 / 351 | time 56[s] | loss 1.14
+| epoch 1 |  iter 141 / 351 | time 65[s] | loss 1.09
+| epoch 1 |  iter 161 / 351 | time 75[s] | loss 1.06
+| epoch 1 |  iter 181 / 351 | time 84[s] | loss 1.04
+| epoch 1 |  iter 201 / 351 | time 94[s] | loss 1.03
+| epoch 1 |  iter 221 / 351 | time 104[s] | loss 1.02
+| epoch 1 |  iter 241 / 351 | time 114[s] | loss 1.02
+| epoch 1 |  iter 261 / 351 | time 123[s] | loss 1.01
+| epoch 1 |  iter 281 / 351 | time 133[s] | loss 1.00
+| epoch 1 |  iter 301 / 351 | time 143[s] | loss 1.00
+| epoch 1 |  iter 321 / 351 | time 153[s] | loss 1.00
+| epoch 1 |  iter 341 / 351 | time 163[s] | loss 1.00
+Q                      49/51/01
+T 1994-10-15
+X 1978-08-11
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+X 1978-08-11
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+X 1978-08-11
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+X 1978-08-11
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+X 1978-08-11
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+X 1978-08-11
+---
+Q                       80/32/8
+T 2008-08-23
+X 1978-08-11
+---
+Q                       70/03/8
+T 2007-08-30
+X 1978-08-11
+---
+Q                      31/82/01
+T 2013-10-28
+X 1978-08-11
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+X 1978-08-11
+---
+val acc 0.000%
+| epoch 2 |  iter 1 / 351 | time 0[s] | loss 1.00
+| epoch 2 |  iter 21 / 351 | time 10[s] | loss 1.00
+| epoch 2 |  iter 41 / 351 | time 20[s] | loss 0.99
+| epoch 2 |  iter 61 / 351 | time 30[s] | loss 0.99
+| epoch 2 |  iter 81 / 351 | time 40[s] | loss 0.99
+| epoch 2 |  iter 101 / 351 | time 49[s] | loss 0.99
+| epoch 2 |  iter 121 / 351 | time 59[s] | loss 0.99
+| epoch 2 |  iter 141 / 351 | time 69[s] | loss 0.98
+| epoch 2 |  iter 161 / 351 | time 79[s] | loss 0.98
+| epoch 2 |  iter 181 / 351 | time 88[s] | loss 0.97
+| epoch 2 |  iter 201 / 351 | time 98[s] | loss 0.95
+| epoch 2 |  iter 221 / 351 | time 107[s] | loss 0.94
+| epoch 2 |  iter 241 / 351 | time 117[s] | loss 0.90
+| epoch 2 |  iter 261 / 351 | time 127[s] | loss 0.83
+| epoch 2 |  iter 281 / 351 | time 137[s] | loss 0.74
+| epoch 2 |  iter 301 / 351 | time 147[s] | loss 0.66
+| epoch 2 |  iter 321 / 351 | time 156[s] | loss 0.58
+| epoch 2 |  iter 341 / 351 | time 166[s] | loss 0.46
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+X 2006-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+X 2007-08-09
+---
+Q                      31/82/01
+T 2013-10-28
+X 1983-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+X 2016-11-08
+---
+val acc 51.540%
+| epoch 3 |  iter 1 / 351 | time 0[s] | loss 0.35
+| epoch 3 |  iter 21 / 351 | time 10[s] | loss 0.30
+| epoch 3 |  iter 41 / 351 | time 20[s] | loss 0.21
+| epoch 3 |  iter 61 / 351 | time 29[s] | loss 0.14
+| epoch 3 |  iter 81 / 351 | time 39[s] | loss 0.09
+| epoch 3 |  iter 101 / 351 | time 49[s] | loss 0.07
+| epoch 3 |  iter 121 / 351 | time 59[s] | loss 0.05
+| epoch 3 |  iter 141 / 351 | time 70[s] | loss 0.04
+| epoch 3 |  iter 161 / 351 | time 80[s] | loss 0.03
+| epoch 3 |  iter 181 / 351 | time 89[s] | loss 0.03
+| epoch 3 |  iter 201 / 351 | time 99[s] | loss 0.02
+| epoch 3 |  iter 221 / 351 | time 109[s] | loss 0.02
+| epoch 3 |  iter 241 / 351 | time 119[s] | loss 0.02
+| epoch 3 |  iter 261 / 351 | time 129[s] | loss 0.01
+| epoch 3 |  iter 281 / 351 | time 139[s] | loss 0.01
+| epoch 3 |  iter 301 / 351 | time 149[s] | loss 0.01
+| epoch 3 |  iter 321 / 351 | time 159[s] | loss 0.01
+| epoch 3 |  iter 341 / 351 | time 169[s] | loss 0.01
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.900%
+| epoch 4 |  iter 1 / 351 | time 0[s] | loss 0.01
+| epoch 4 |  iter 21 / 351 | time 10[s] | loss 0.01
+| epoch 4 |  iter 41 / 351 | time 20[s] | loss 0.01
+| epoch 4 |  iter 61 / 351 | time 30[s] | loss 0.01
+| epoch 4 |  iter 81 / 351 | time 40[s] | loss 0.01
+| epoch 4 |  iter 101 / 351 | time 50[s] | loss 0.01
+| epoch 4 |  iter 121 / 351 | time 60[s] | loss 0.00
+| epoch 4 |  iter 141 / 351 | time 70[s] | loss 0.01
+| epoch 4 |  iter 161 / 351 | time 80[s] | loss 0.00
+| epoch 4 |  iter 181 / 351 | time 90[s] | loss 0.00
+| epoch 4 |  iter 201 / 351 | time 100[s] | loss 0.00
+| epoch 4 |  iter 221 / 351 | time 110[s] | loss 0.00
+| epoch 4 |  iter 241 / 351 | time 120[s] | loss 0.00
+| epoch 4 |  iter 261 / 351 | time 130[s] | loss 0.00
+| epoch 4 |  iter 281 / 351 | time 140[s] | loss 0.00
+| epoch 4 |  iter 301 / 351 | time 150[s] | loss 0.00
+| epoch 4 |  iter 321 / 351 | time 160[s] | loss 0.00
+| epoch 4 |  iter 341 / 351 | time 171[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.900%
+| epoch 5 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 5 |  iter 21 / 351 | time 10[s] | loss 0.00
+| epoch 5 |  iter 41 / 351 | time 20[s] | loss 0.00
+| epoch 5 |  iter 61 / 351 | time 30[s] | loss 0.00
+| epoch 5 |  iter 81 / 351 | time 40[s] | loss 0.00
+| epoch 5 |  iter 101 / 351 | time 50[s] | loss 0.00
+| epoch 5 |  iter 121 / 351 | time 59[s] | loss 0.00
+| epoch 5 |  iter 141 / 351 | time 69[s] | loss 0.00
+| epoch 5 |  iter 161 / 351 | time 80[s] | loss 0.00
+| epoch 5 |  iter 181 / 351 | time 90[s] | loss 0.00
+| epoch 5 |  iter 201 / 351 | time 100[s] | loss 0.00
+| epoch 5 |  iter 221 / 351 | time 109[s] | loss 0.00
+| epoch 5 |  iter 241 / 351 | time 119[s] | loss 0.00
+| epoch 5 |  iter 261 / 351 | time 129[s] | loss 0.00
+| epoch 5 |  iter 281 / 351 | time 139[s] | loss 0.00
+| epoch 5 |  iter 301 / 351 | time 149[s] | loss 0.00
+| epoch 5 |  iter 321 / 351 | time 159[s] | loss 0.00
+| epoch 5 |  iter 341 / 351 | time 169[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.920%
+| epoch 6 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 6 |  iter 21 / 351 | time 11[s] | loss 0.00
+| epoch 6 |  iter 41 / 351 | time 21[s] | loss 0.00
+| epoch 6 |  iter 61 / 351 | time 31[s] | loss 0.00
+| epoch 6 |  iter 81 / 351 | time 41[s] | loss 0.00
+| epoch 6 |  iter 101 / 351 | time 52[s] | loss 0.00
+| epoch 6 |  iter 121 / 351 | time 62[s] | loss 0.00
+| epoch 6 |  iter 141 / 351 | time 72[s] | loss 0.00
+| epoch 6 |  iter 161 / 351 | time 121[s] | loss 0.00
+| epoch 6 |  iter 181 / 351 | time 176[s] | loss 0.00
+| epoch 6 |  iter 201 / 351 | time 188[s] | loss 0.00
+| epoch 6 |  iter 221 / 351 | time 200[s] | loss 0.00
+| epoch 6 |  iter 241 / 351 | time 210[s] | loss 0.00
+| epoch 6 |  iter 261 / 351 | time 220[s] | loss 0.00
+| epoch 6 |  iter 281 / 351 | time 230[s] | loss 0.00
+| epoch 6 |  iter 301 / 351 | time 239[s] | loss 0.00
+| epoch 6 |  iter 321 / 351 | time 249[s] | loss 0.00
+| epoch 6 |  iter 341 / 351 | time 259[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.920%
+| epoch 7 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 7 |  iter 21 / 351 | time 10[s] | loss 0.00
+| epoch 7 |  iter 41 / 351 | time 20[s] | loss 0.00
+| epoch 7 |  iter 61 / 351 | time 30[s] | loss 0.00
+| epoch 7 |  iter 81 / 351 | time 39[s] | loss 0.00
+| epoch 7 |  iter 101 / 351 | time 49[s] | loss 0.00
+| epoch 7 |  iter 121 / 351 | time 59[s] | loss 0.00
+| epoch 7 |  iter 141 / 351 | time 69[s] | loss 0.00
+| epoch 7 |  iter 161 / 351 | time 79[s] | loss 0.00
+| epoch 7 |  iter 181 / 351 | time 89[s] | loss 0.00
+| epoch 7 |  iter 201 / 351 | time 98[s] | loss 0.00
+| epoch 7 |  iter 221 / 351 | time 108[s] | loss 0.00
+| epoch 7 |  iter 241 / 351 | time 119[s] | loss 0.00
+| epoch 7 |  iter 261 / 351 | time 128[s] | loss 0.00
+| epoch 7 |  iter 281 / 351 | time 138[s] | loss 0.00
+| epoch 7 |  iter 301 / 351 | time 148[s] | loss 0.00
+| epoch 7 |  iter 321 / 351 | time 158[s] | loss 0.00
+| epoch 7 |  iter 341 / 351 | time 168[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.920%
+| epoch 8 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 8 |  iter 21 / 351 | time 10[s] | loss 0.00
+| epoch 8 |  iter 41 / 351 | time 20[s] | loss 0.00
+| epoch 8 |  iter 61 / 351 | time 29[s] | loss 0.00
+| epoch 8 |  iter 81 / 351 | time 39[s] | loss 0.00
+| epoch 8 |  iter 101 / 351 | time 49[s] | loss 0.00
+| epoch 8 |  iter 121 / 351 | time 58[s] | loss 0.00
+| epoch 8 |  iter 141 / 351 | time 68[s] | loss 0.00
+| epoch 8 |  iter 161 / 351 | time 78[s] | loss 0.00
+| epoch 8 |  iter 181 / 351 | time 88[s] | loss 0.00
+| epoch 8 |  iter 201 / 351 | time 98[s] | loss 0.00
+| epoch 8 |  iter 221 / 351 | time 108[s] | loss 0.00
+| epoch 8 |  iter 241 / 351 | time 117[s] | loss 0.00
+| epoch 8 |  iter 261 / 351 | time 127[s] | loss 0.00
+| epoch 8 |  iter 281 / 351 | time 137[s] | loss 0.07
+| epoch 8 |  iter 301 / 351 | time 147[s] | loss 0.01
+| epoch 8 |  iter 321 / 351 | time 157[s] | loss 0.01
+| epoch 8 |  iter 341 / 351 | time 166[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.660%
+| epoch 9 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 9 |  iter 21 / 351 | time 10[s] | loss 0.00
+| epoch 9 |  iter 41 / 351 | time 20[s] | loss 0.00
+| epoch 9 |  iter 61 / 351 | time 29[s] | loss 0.00
+| epoch 9 |  iter 81 / 351 | time 39[s] | loss 0.00
+| epoch 9 |  iter 101 / 351 | time 49[s] | loss 0.00
+| epoch 9 |  iter 121 / 351 | time 58[s] | loss 0.00
+| epoch 9 |  iter 141 / 351 | time 68[s] | loss 0.00
+| epoch 9 |  iter 161 / 351 | time 78[s] | loss 0.00
+| epoch 9 |  iter 181 / 351 | time 87[s] | loss 0.00
+| epoch 9 |  iter 201 / 351 | time 97[s] | loss 0.00
+| epoch 9 |  iter 221 / 351 | time 107[s] | loss 0.00
+| epoch 9 |  iter 241 / 351 | time 117[s] | loss 0.00
+| epoch 9 |  iter 261 / 351 | time 126[s] | loss 0.00
+| epoch 9 |  iter 281 / 351 | time 136[s] | loss 0.00
+| epoch 9 |  iter 301 / 351 | time 146[s] | loss 0.00
+| epoch 9 |  iter 321 / 351 | time 156[s] | loss 0.00
+| epoch 9 |  iter 341 / 351 | time 165[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.960%
+| epoch 10 |  iter 1 / 351 | time 0[s] | loss 0.00
+| epoch 10 |  iter 21 / 351 | time 12[s] | loss 0.00
+| epoch 10 |  iter 41 / 351 | time 23[s] | loss 0.00
+| epoch 10 |  iter 61 / 351 | time 34[s] | loss 0.00
+| epoch 10 |  iter 81 / 351 | time 45[s] | loss 0.00
+| epoch 10 |  iter 101 / 351 | time 55[s] | loss 0.00
+| epoch 10 |  iter 121 / 351 | time 64[s] | loss 0.00
+| epoch 10 |  iter 141 / 351 | time 74[s] | loss 0.00
+| epoch 10 |  iter 161 / 351 | time 84[s] | loss 0.00
+| epoch 10 |  iter 181 / 351 | time 94[s] | loss 0.00
+| epoch 10 |  iter 201 / 351 | time 104[s] | loss 0.00
+| epoch 10 |  iter 221 / 351 | time 113[s] | loss 0.00
+| epoch 10 |  iter 241 / 351 | time 123[s] | loss 0.00
+| epoch 10 |  iter 261 / 351 | time 133[s] | loss 0.00
+| epoch 10 |  iter 281 / 351 | time 143[s] | loss 0.00
+| epoch 10 |  iter 301 / 351 | time 153[s] | loss 0.00
+| epoch 10 |  iter 321 / 351 | time 164[s] | loss 0.00
+| epoch 10 |  iter 341 / 351 | time 173[s] | loss 0.00
+Q                      49/51/01
+T 1994-10-15
+O 1994-10-15
+---
+Q   8002 ,31 rebmevon ,yadsruht
+T 2008-11-13
+O 2008-11-13
+---
+Q                  3002 ,52 raM
+T 2003-03-25
+O 2003-03-25
+---
+Q    6102 ,22 rebmevoN ,yadseuT
+T 2016-11-22
+O 2016-11-22
+---
+Q       0791 ,81 yluJ ,yadrutaS
+T 1970-07-18
+O 1970-07-18
+---
+Q               2991 ,6 rebotco
+T 1992-10-06
+O 1992-10-06
+---
+Q                       80/32/8
+T 2008-08-23
+O 2008-08-23
+---
+Q                       70/03/8
+T 2007-08-30
+O 2007-08-30
+---
+Q                      31/82/01
+T 2013-10-28
+O 2013-10-28
+---
+Q      6102 ,6 rebmevon ,yadnus
+T 2016-11-06
+O 2016-11-06
+---
+val acc 99.960%
+
+Process finished with exit code 0
